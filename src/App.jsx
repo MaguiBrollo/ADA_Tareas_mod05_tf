@@ -20,6 +20,7 @@ function App() {
 		}),
 		[]
 	);
+	
 	const theme = React.useMemo(
 		() =>
 			createTheme({
