@@ -38,7 +38,7 @@ export const Header = ({ ColorModeContext }) => {
 					fontSize: "2rem",
 				}}
 			>
-				Tareas
+				tasksINorder
 			</Typography>
 			<Box
 				sx={{

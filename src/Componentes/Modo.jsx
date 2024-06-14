@@ -12,21 +12,20 @@ export const Modo = ({ ColorModeContext }) => {
 	return (
 		<Box
 			sx={{
-				display: "flex",
-				width: "8%",
-				alignItems: "center",
-				justifyContent: "center",
-				bgcolor: "background.paper",
 				color: "text.primary",
-				borderRadius: 1,
-				p: 3,
 			}}
 		>
-			Modo {theme.palette.mode}
 			<IconButton
-				sx={{ ml: 1 }}
+				sx={{
+					margin: "10px",
+					color: "text.primary",
+					":hover": {
+						color: "text.secondary",
+						backgroundColor: "button.hover",
+					},
+				}}
+				aria-label="Cambiar Modo Claro Oscuro"
 				onClick={colorMode.toggleColorMode}
-				color="inherit"
 			>
 				{theme.palette.mode === "dark" ? <FaRegMoon /> : <FaRegSun />}
 			</IconButton>

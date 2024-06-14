@@ -1,13 +1,10 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { grey, deepPurple } from "@mui/material/colors";
+import { Box, Typography } from "@mui/material";
 
-import { Button } from "@mui/material";
-import { Header } from "./Componentes/Header";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { IoFilterSharp } from "react-icons/io5";
-
-import {grey, deepPurple } from "@mui/material/colors";
+import { MenuBar } from "./Componentes/MenuBar";
 
 import "./App.css";
 
@@ -34,12 +31,15 @@ function App() {
 								primary: grey,
 								divider: grey[200],
 								background: {
-									default: grey[200],
+									default: grey[500],
 									paper: grey[800],
 								},
 								text: {
 									primary: "#fff",
-									secondary: grey[800],
+									secondary: grey[200],
+								},
+								button: {
+									hover: grey[900],
 								},
 						  }
 						: {
@@ -52,7 +52,10 @@ function App() {
 								},
 								text: {
 									primary: "#fff",
-									secondary: grey[500],
+									secondary: grey[200],
+								},
+								button: {
+									hover: "#2A2239",
 								},
 						  }),
 				},
@@ -73,25 +76,21 @@ function App() {
 						bgcolor: "background.default", //"#8E8EFF",
 					}}
 				>
-					<Header ColorModeContext={ColorModeContext} />
+					{/*  ----  NavBar  -------*/}
+					<MenuBar ColorModeContext={ColorModeContext} />
 
-					<Box>
-						<Button
-							variant="contained"
-							endIcon={<IoIosAddCircleOutline />}
-							sx={{ margin: "5px" }}
-						>
-							Tarea
-						</Button>
-						<Button
-							variant="contained"
-							endIcon={<IoFilterSharp />}
-							sx={{ margin: "5px" }}
-						>
-							Send
-						</Button>
-					</Box>
-					<h2>Nueva Tarea</h2>
+					{/*  ----  Título  -------*/}
+					<Typography
+						sx={{
+							color: "text.secondary",
+							display: "flex",
+							alignItems: "center",
+							margin: "10px",
+							fontSize: "2rem",
+						}}
+					>
+						Administrador de Tareas
+					</Typography>
 				</Box>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
