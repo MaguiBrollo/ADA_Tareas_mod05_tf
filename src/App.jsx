@@ -1,10 +1,12 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import * as React from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { grey, deepPurple } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import { Box, Typography } from "@mui/material";
 
 import { MenuBar } from "./Componentes/MenuBar";
+import { TareasListar } from "./Componentes/TareasListar";
 
 import "./App.css";
 
@@ -20,7 +22,7 @@ function App() {
 		}),
 		[]
 	);
-	
+
 	const theme = React.useMemo(
 		() =>
 			createTheme({
@@ -28,34 +30,49 @@ function App() {
 					mode,
 					...(mode === "light"
 						? {
-								// palette values for light mode
-								primary: grey,
-								divider: grey[200],
+								// Valores para MDOD light
+
+								primary: {
+									main: grey[200],
+								},
+								secondary: {
+									main: grey[900],
+								},
 								background: {
 									default: grey[500],
 									paper: grey[800],
+									table: grey[700],
 								},
 								text: {
-									primary: "#fff",
-									secondary: grey[200],
+									primary: "#FFFFFF", //blanco
+									secondary: grey[900],
 								},
 								button: {
+									textHover: grey[200],
 									hover: grey[900],
 								},
 						  }
 						: {
-								// palette values for dark mode
-								primary: deepPurple,
-								divider: deepPurple[700],
+								// Valores para MDOD dark
+
+								primary: {
+									main: "#2A2239",
+								},
+								secondary: {
+									main: "#6355E6",
+								},
+
 								background: {
 									default: "#8E8EFF",
 									paper: "#262654",
+									table: "#6355E6",
 								},
 								text: {
-									primary: "#fff",
-									secondary: grey[200],
+									primary: "#FFFFFF", //blanco
+									secondary: grey[900],
 								},
 								button: {
+									textHover: grey[200],
 									hover: "#2A2239",
 								},
 						  }),
@@ -83,7 +100,7 @@ function App() {
 					{/*  ----  Título  -------*/}
 					<Typography
 						sx={{
-							color: "text.secondary",
+							color: "text.primary",
 							display: "flex",
 							alignItems: "center",
 							margin: "10px",
@@ -92,6 +109,9 @@ function App() {
 					>
 						Administrador de Tareas
 					</Typography>
+
+					{/*  ----  TAREAS LISTAR TODAS  -------*/}
+					<TareasListar />
 				</Box>
 			</ThemeProvider>
 		</ColorModeContext.Provider>

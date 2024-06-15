@@ -20,7 +20,7 @@ export const Modo = ({ ColorModeContext }) => {
 					margin: "10px",
 					color: "text.primary",
 					":hover": {
-						color: "text.secondary",
+						color: "button.textHover",
 						backgroundColor: "button.hover",
 					},
 				}}

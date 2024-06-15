@@ -13,8 +13,9 @@ import { Button, CardMedia, MenuItem } from "@mui/material";
 import ImgLogo from "../assets/LogoTarea.png";
 import { Modo } from "./Modo";
 
-const pages = ["Nueva Tarea", "Ordenar", "Filtrar"];
+const pages = ["Nueva Tarea", "Buscar", "Filtrar"];
 
+/* ------------------------------------------------------ */
 export const MenuBar = ({ ColorModeContext }) => {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -63,7 +64,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 							textDecoration: "none",
 						}}
 					>
-						tasksINorder
+						tasks IN order
 					</Typography>
 
 					<Typography
@@ -81,7 +82,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 							textDecoration: "none",
 						}}
 					>
-						taskINorder
+						task IN order
 					</Typography>
 
 					<Box
@@ -100,7 +101,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 									color: "white",
 									display: "block",
 									":hover": {
-										color: "text.secondary",
+										color: "button.textHover",
 										backgroundColor: "button.hover",
 										borderRadius: "10px",
 									},
@@ -154,7 +155,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 									onClick={handleCloseNavMenu}
 									sx={{
 										":hover": {
-											color: "text.secondary",
+											color: "button.textHover",
 											backgroundColor: "button.hover",
 										},
 									}}
