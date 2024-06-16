@@ -294,7 +294,7 @@ export const TareasListar = ({ tareasEnOrden }) => {
 
 	/* ================================= */
 	return (
-		<Box sx={{ width: "80%" }}>
+		<Box sx={{ width: "95%", maxWidth: "900px" }}>
 			<Paper sx={{ width: "100%", mb: 2 }}>
 				<EnhancedTableToolbar numSelected={selected.length} />
 				<TableContainer>
@@ -336,14 +336,8 @@ export const TareasListar = ({ tareasEnOrden }) => {
 												}}
 											/>
 										</TableCell>
-										<TableCell
-											component="th"
-											id={labelId}
-											scope="row"
-											padding="none"
-										>
-											{row.tarea}
-										</TableCell>
+									
+										<TableCell align="center">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
 										<TableCell align="center">{row.fecha}</TableCell>
 										<TableCell align="center">
