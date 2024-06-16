@@ -120,7 +120,7 @@ function App() {
 							display: "flex",
 							alignItems: "center",
 							margin: "10px",
-							fontSize: "2rem",
+							fontSize: "1.8rem",
 						}}
 					>
 						Administrador de Tareas

@@ -27,3 +27,30 @@ export const tareasArray = [
 	createData(uuidv4(), "MANDAR PAPELES INSEEP", "TRAMITES", "01/01/2024", false),
 	createData(uuidv4(), "REGAR LAS PLANTAS", "HOGAR", "01/01/2024", false), */
 ];
+
+export const categorias = [
+	{
+		id: uuidv4(),
+		nombre: "ALIMENTOS",
+	},
+	{
+		id: uuidv4(),
+		nombre: "HOGAR",
+	},
+	{
+		id: uuidv4(),
+		nombre: "EDUCACION",
+	},
+	{
+		id: uuidv4(),
+		nombre: "SALUD",
+	},
+	{
+		id: uuidv4(),
+		nombre: "TRAMITES",
+	},
+	{
+		id: uuidv4(),
+		nombre: "VARIOS",
+	},
+];

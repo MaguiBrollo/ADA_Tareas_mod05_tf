@@ -224,7 +224,7 @@ EnhancedTableToolbar.propTypes = {
 /* ---------------------------------------------------------------------- */
 export const TareasListar = ({ tareasEnOrden }) => {
 	const [order, setOrder] = React.useState("asc");
-	const [orderBy, setOrderBy] = React.useState("categoria");
+	const [orderBy, setOrderBy] = React.useState("estado");
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
