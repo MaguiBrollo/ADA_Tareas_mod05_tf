@@ -25,8 +25,6 @@ import { MdDelete } from "react-icons/md";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
 
-import { tareasEnOrden } from "../utils/Datos";
-
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -101,7 +99,7 @@ function EnhancedTableHead(props) {
 	};
 
 	return (
-		<TableHead>
+		<TableHead sx={{ bgcolor: "background.tableHead" }}>
 			<TableRow>
 				<TableCell padding="checkbox">
 					<Checkbox
@@ -117,7 +115,7 @@ function EnhancedTableHead(props) {
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? "right" : "left"}
+						align={headCell.numeric ? "right" : "center"}
 						padding={headCell.disablePadding ? "none" : "normal"}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -125,7 +123,6 @@ function EnhancedTableHead(props) {
 							active={orderBy === headCell.id}
 							direction={orderBy === headCell.id ? order : "asc"}
 							onClick={createSortHandler(headCell.id)}
-							
 						>
 							{headCell.label}
 							{orderBy === headCell.id ? (
@@ -225,7 +222,7 @@ EnhancedTableToolbar.propTypes = {
 
 //----------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
-export const TareasListar = () => {
+export const TareasListar = ({ tareasEnOrden }) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("categoria");
 	const [selected, setSelected] = React.useState([]);
@@ -302,7 +299,7 @@ export const TareasListar = () => {
 				<EnhancedTableToolbar numSelected={selected.length} />
 				<TableContainer>
 					<Table
-						sx={{ minWidth: 500, bgcolor: "background.table" }}
+						sx={{ minWidth: 500, bgcolor: "background.tableRows" }}
 						aria-labelledby="tableTitle"
 						size={dense ? "small" : "medium"}
 					>

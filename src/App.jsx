@@ -10,10 +10,22 @@ import { TareasListar } from "./Componentes/TareasListar";
 
 import "./App.css";
 
+import { tareasArray } from "./utils/Datos";
+import { setTareas } from "./utils/LocalStorage";
+import { getTareas } from "./utils/LocalStorage";
+
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
-	const [mode, setMode] = React.useState("light");
+	const [tareasEnOrden, setTareasEnOrden] = React.useState(
+		getTareas() || setTareas(tareasArray)
+	);
+
+	const [mode, setMode] = React.useState(
+		localStorage.getItem("modoClaroOscuro") || "light"
+	);
+
+	localStorage.setItem("modoClaroOscuro", mode);
 	const colorMode = React.useMemo(
 		() => ({
 			toggleColorMode: () => {
@@ -28,9 +40,9 @@ function App() {
 			createTheme({
 				palette: {
 					mode,
-					...(mode === "light"
+					...(mode === "dark"
 						? {
-								// Valores para MDOD light
+								// Valores para MDOD dark
 
 								primary: {
 									main: grey[200],
@@ -39,9 +51,10 @@ function App() {
 									main: grey[900],
 								},
 								background: {
-									default: grey[500],
+									default: grey[400],
 									paper: grey[800],
-									table: grey[700],
+									tableRows: grey[600],
+									tableHead: grey[700],
 								},
 								text: {
 									primary: "#FFFFFF", //blanco
@@ -53,7 +66,7 @@ function App() {
 								},
 						  }
 						: {
-								// Valores para MDOD dark
+								// Valores para MDOD light
 
 								primary: {
 									main: "#2A2239",
@@ -66,6 +79,8 @@ function App() {
 									default: "#8E8EFF",
 									paper: "#262654",
 									table: "#6355E6",
+									tableRows: "#6355E6",
+									tableHead: "#5034c9",
 								},
 								text: {
 									primary: "#FFFFFF", //blanco
@@ -91,7 +106,7 @@ function App() {
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						bgcolor: "background.default", //"#8E8EFF",
+						bgcolor: "background.default", 
 					}}
 				>
 					{/*  ----  NavBar  -------*/}
@@ -111,7 +126,10 @@ function App() {
 					</Typography>
 
 					{/*  ----  TAREAS LISTAR TODAS  -------*/}
-					<TareasListar />
+					<TareasListar
+						tareasEnOrden={tareasEnOrden}
+						setTareasEnOrden={setTareasEnOrden}
+					/>
 				</Box>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
