@@ -7,16 +7,17 @@ import { Box, Typography } from "@mui/material";
 
 import { MenuBar } from "./Componentes/MenuBar";
 import { TareasListar } from "./Componentes/TareasListar";
-
-import "./App.css";
-
 import { tareasArray } from "./utils/Datos";
 import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
+import { TareaNueva } from "./Componentes/TareaNueva";
+
+import "./App.css";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
+	const [open, setOpen] = React.useState(false);
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
@@ -106,11 +107,11 @@ function App() {
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
-						bgcolor: "background.default", 
+						bgcolor: "background.default",
 					}}
 				>
 					{/*  ----  NavBar  -------*/}
-					<MenuBar ColorModeContext={ColorModeContext} />
+					<MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} />
 
 					{/*  ----  Título  -------*/}
 					<Typography
@@ -130,6 +131,9 @@ function App() {
 						tareasEnOrden={tareasEnOrden}
 						setTareasEnOrden={setTareasEnOrden}
 					/>
+
+					{/*  ----  Nueva LISTAR  -------*/}
+					<TareaNueva setOpen={setOpen} open={open} />
 				</Box>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
