@@ -125,11 +125,11 @@ function EnhancedTableHead(props) {
 							onClick={createSortHandler(headCell.id)}
 						>
 							{headCell.label}
-							{orderBy === headCell.id ? (
+							{/* {orderBy === headCell.id ? (
 								<Box component="span">
 									{order === "desc" ? "(Desc)" : "(Asc)"}
 								</Box>
-							) : null}
+							) : null} */}
 						</TableSortLabel>
 					</TableCell>
 				))}
