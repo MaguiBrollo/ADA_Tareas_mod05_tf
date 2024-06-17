@@ -201,12 +201,12 @@ function EnhancedTableToolbar(props) {
 			) : (
 				<>
 					<Tooltip>
-						<IconButton sx={{ color: "text.secondary" }}>
+						<IconButton sx={{ color: "text.iconos" }}>
 							<MdOutlineTaskAlt />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
-						<IconButton sx={{ color: "text.secondary" }}>
+						<IconButton sx={{ color: "text.iconos" }}>
 							<MdDelete />
 						</IconButton>
 					</Tooltip>
@@ -222,13 +222,14 @@ EnhancedTableToolbar.propTypes = {
 
 //----------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
-export const TareasListar = ({ tareasEnOrden }) => {
+export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
-	const [selected, setSelected] = React.useState([]);
-	const [page, setPage] = React.useState(0);
-	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [page, setPage] = React.useState(0);
+
+	const [selected, setSelected] = React.useState([]);
+	const [dense, setDense] = React.useState(false);
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
@@ -289,7 +290,7 @@ export const TareasListar = ({ tareasEnOrden }) => {
 				page * rowsPerPage,
 				page * rowsPerPage + rowsPerPage
 			),
-		[order, orderBy, page, rowsPerPage]
+		[order, orderBy, page, rowsPerPage, actualizarListar]
 	);
 
 	/* ================================= */
@@ -336,7 +337,7 @@ export const TareasListar = ({ tareasEnOrden }) => {
 												}}
 											/>
 										</TableCell>
-									
+
 										<TableCell align="center">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
 										<TableCell align="center">{row.fecha}</TableCell>

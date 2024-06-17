@@ -21,6 +21,7 @@ import "./App.css";
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
+	const [actualizarListar, setActualizarListar] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
@@ -64,6 +65,7 @@ function App() {
 								text: {
 									primary: "#FFFFFF", //blanco
 									secondary: grey[200],
+									iconos: grey[600],
 								},
 								button: {
 									textHover: grey[200],
@@ -90,6 +92,7 @@ function App() {
 								text: {
 									primary: "#FFFFFF", //blanco
 									secondary: grey[200],
+									iconos: grey[600],
 								},
 								button: {
 									textHover: grey[200],
@@ -117,7 +120,6 @@ function App() {
 					>
 						{/*  ----  NavBar  -------*/}
 						<MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} />
-
 						{/*  ----  Título  -------*/}
 						<Typography
 							sx={{
@@ -130,15 +132,20 @@ function App() {
 						>
 							Administrador de Tareas
 						</Typography>
-
 						{/*  ----  TAREAS LISTAR TODAS  -------*/}
 						<TareasListar
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
+							actualizarListar={actualizarListar}
 						/>
-
-						{/*  ----  Nueva LISTAR  -------*/}
-						<TareaNueva setOpen={setOpen} open={open} />
+						{/*  ----  Nueva Tarea  -------*/}
+						<TareaNueva
+							open={open}
+							setOpen={setOpen}
+							tareasEnOrden={tareasEnOrden}
+							setTareasEnOrden={setTareasEnOrden}
+							setActualizarListar={setActualizarListar}
+						/>
 					</Box>
 				</LocalizationProvider>
 			</ThemeProvider>

@@ -25,7 +25,11 @@ import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { categorias } from "../utils/Datos";
+import { crearTarea } from "../utils/Datos";
+import { setTareas } from "../utils/LocalStorage";
 
+const hoy = dayjs();
+//const ayer = dayjs().subtract(1, "day");
 //------------------------------------
 function PaperComponent(props) {
 	return (
@@ -39,20 +43,29 @@ function PaperComponent(props) {
 }
 
 /*  --------------------------------------------------   */
-export const TareaNueva = ({ setOpen, open }) => {
+export const TareaNueva = ({
+	open,
+	setOpen,
+	tareasEnOrden,
+	setTareasEnOrden,
+	setActualizarListar,
+}) => {
 	const [errorDescripcion, setErrorDescripcion] = useState(false);
 	const [errorCategoria, setErrorCategoria] = useState(false);
-	const [errores, setErrores] = useState(false);
+
+	/* const [fech, setFech] = useState(dayjs(new Date())); */
 
 	const [loading, setLoading] = useState(false);
 	const [datosForm, setDatosForm] = useState({
 		descripcion: "",
 		categoria: " ",
-		fecha: dayjs(new Date()),
+		fecha: hoy,
 	});
 	const { descripcion, categoria, fecha } = datosForm;
 
 	const guardarDatos = (e) => {
+		setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
+
 		if (e.target.name === "descripcion") {
 			if (descripcion.length > 60) {
 				setErrorDescripcion(true);
@@ -66,46 +79,52 @@ export const TareaNueva = ({ setOpen, open }) => {
 			}
 		}
 		if (e.target.name === "categoria") {
-			if (categoria !== "") {
+			if (categoria === "") {
 				setErrorCategoria(true);
 			} else {
 				setErrorCategoria(false);
 			}
 		}
-		setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = (descripcion, categoria, fecha) => {
 		if (descripcion.length > 60) {
 			setErrorDescripcion(true);
-			setErrores(true);
 		}
-		if (descripcion === "") {
+		if (descripcion.length < 5) {
 			setErrorDescripcion(true);
-			setErrores(true);
 		}
-		if (categoria !== "") {
+		if (categoria === " ") {
 			setErrorCategoria(true);
-			setErrores(true);
 		}
-		console.log(
-			"Datos Guardando...: ",
-			descripcion,
-			categoria,
-			new Date(fecha).toLocaleDateString()
-		);
 
-		if (errores) {
+		if (setErrorDescripcion && setErrorCategoria) {
+			const nuevoArrayTareas = [...tareasEnOrden];
+			const nf = dayjs(fecha).format("DD/MM/YYYY");
+
+			const nuevoArray = crearTarea(descripcion, categoria, nf, false);
+			nuevoArrayTareas.push(nuevoArray);
+			setTareasEnOrden(nuevoArrayTareas); //array para listar
+			setTareas(nuevoArrayTareas); //localstorage
+			setActualizarListar(true); //para que se renderice la tabla de Listar
+
 			setLoading(true);
 			setTimeout(() => {
 				setLoading(false);
-				setOpen(false);
+				cerrarTareaNueva();
 			}, 2000);
 		}
 	};
 
-	const handleClose = () => {
+	const cerrarTareaNueva = () => {
 		setOpen(false);
+		setErrorCategoria(false);
+		setErrorDescripcion(false);
+		setDatosForm({
+			descripcion: "",
+			categoria: " ",
+			fecha: hoy,
+		});
 	};
 
 	/* ============================ */
@@ -149,7 +168,6 @@ export const TareaNueva = ({ setOpen, open }) => {
 
 					<Box
 						component="form"
-						onSubmit={guardarDatos}
 						sx={{
 							"& .MuiTextField-root": {
 								margin: "15px",
@@ -203,11 +221,16 @@ export const TareaNueva = ({ setOpen, open }) => {
 						{/* fecha */}
 						<DemoItem>
 							<MobileDatePicker
-								name="fecha"
-								value={fecha}
-								onChange={guardarDatos}
+								value={datosForm.fecha}
+								onChange={(nuevoValor) => {
+									setDatosForm({
+										...datosForm,
+										fecha: nuevoValor,
+									});
+								}}
 								label="Fecha para la tarea"
 								format="DD-MM-YYYY"
+								minDate={hoy}
 								required
 								closeOnSelect
 								slotProps={{
@@ -220,7 +243,7 @@ export const TareaNueva = ({ setOpen, open }) => {
 					<DialogActions>
 						<Button
 							autoFocus
-							onClick={handleClose}
+							onClick={cerrarTareaNueva}
 							endIcon={<MdOutlineCancel />}
 							sx={{
 								color: "text.primary",
