@@ -12,6 +12,10 @@ import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
 import { TareaNueva } from "./Componentes/TareaNueva";
 
+//Fechas
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import "./App.css";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -52,14 +56,14 @@ function App() {
 									main: grey[900],
 								},
 								background: {
-									default: grey[400],
+									default: grey[500],
 									paper: grey[800],
 									tableRows: grey[600],
 									tableHead: grey[700],
 								},
 								text: {
 									primary: "#FFFFFF", //blanco
-									secondary: grey[900],
+									secondary: grey[200],
 								},
 								button: {
 									textHover: grey[200],
@@ -85,7 +89,7 @@ function App() {
 								},
 								text: {
 									primary: "#FFFFFF", //blanco
-									secondary: grey[900],
+									secondary: grey[200],
 								},
 								button: {
 									textHover: grey[200],
@@ -100,41 +104,43 @@ function App() {
 	return (
 		<ColorModeContext.Provider value={colorMode}>
 			<ThemeProvider theme={theme}>
-				<Box
-					sx={{
-						width: "100%",
-						minHeight: "100vh",
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						bgcolor: "background.default",
-					}}
-				>
-					{/*  ----  NavBar  -------*/}
-					<MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} />
-
-					{/*  ----  Título  -------*/}
-					<Typography
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<Box
 						sx={{
-							color: "text.primary",
+							width: "100%",
+							minHeight: "100vh",
 							display: "flex",
+							flexDirection: "column",
 							alignItems: "center",
-							margin: "10px",
-							fontSize: "1.8rem",
+							bgcolor: "background.default",
 						}}
 					>
-						Administrador de Tareas
-					</Typography>
+						{/*  ----  NavBar  -------*/}
+						<MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} />
 
-					{/*  ----  TAREAS LISTAR TODAS  -------*/}
-					<TareasListar
-						tareasEnOrden={tareasEnOrden}
-						setTareasEnOrden={setTareasEnOrden}
-					/>
+						{/*  ----  Título  -------*/}
+						<Typography
+							sx={{
+								color: "text.primary",
+								display: "flex",
+								alignItems: "center",
+								margin: "10px",
+								fontSize: "1.8rem",
+							}}
+						>
+							Administrador de Tareas
+						</Typography>
 
-					{/*  ----  Nueva LISTAR  -------*/}
-					<TareaNueva setOpen={setOpen} open={open} />
-				</Box>
+						{/*  ----  TAREAS LISTAR TODAS  -------*/}
+						<TareasListar
+							tareasEnOrden={tareasEnOrden}
+							setTareasEnOrden={setTareasEnOrden}
+						/>
+
+						{/*  ----  Nueva LISTAR  -------*/}
+						<TareaNueva setOpen={setOpen} open={open} />
+					</Box>
+				</LocalizationProvider>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
 	);
