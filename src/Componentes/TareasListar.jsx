@@ -25,8 +25,6 @@ import { MdDelete } from "react-icons/md";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
 
-import { tareasEnOrden } from "../utils/Datos";
-
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -101,7 +99,7 @@ function EnhancedTableHead(props) {
 	};
 
 	return (
-		<TableHead>
+		<TableHead sx={{ bgcolor: "background.tableHead" }}>
 			<TableRow>
 				<TableCell padding="checkbox">
 					<Checkbox
@@ -117,7 +115,7 @@ function EnhancedTableHead(props) {
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? "right" : "left"}
+						align={headCell.numeric ? "right" : "center"}
 						padding={headCell.disablePadding ? "none" : "normal"}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -125,14 +123,13 @@ function EnhancedTableHead(props) {
 							active={orderBy === headCell.id}
 							direction={orderBy === headCell.id ? order : "asc"}
 							onClick={createSortHandler(headCell.id)}
-							
 						>
 							{headCell.label}
-							{orderBy === headCell.id ? (
+							{/* {orderBy === headCell.id ? (
 								<Box component="span">
 									{order === "desc" ? "(Desc)" : "(Asc)"}
 								</Box>
-							) : null}
+							) : null} */}
 						</TableSortLabel>
 					</TableCell>
 				))}
@@ -204,12 +201,12 @@ function EnhancedTableToolbar(props) {
 			) : (
 				<>
 					<Tooltip>
-						<IconButton sx={{ color: "text.secondary" }}>
+						<IconButton sx={{ color: "text.iconos" }}>
 							<MdOutlineTaskAlt />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
-						<IconButton sx={{ color: "text.secondary" }}>
+						<IconButton sx={{ color: "text.iconos" }}>
 							<MdDelete />
 						</IconButton>
 					</Tooltip>
@@ -225,13 +222,14 @@ EnhancedTableToolbar.propTypes = {
 
 //----------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
-export const TareasListar = () => {
+export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 	const [order, setOrder] = React.useState("asc");
-	const [orderBy, setOrderBy] = React.useState("categoria");
-	const [selected, setSelected] = React.useState([]);
-	const [page, setPage] = React.useState(0);
-	const [dense, setDense] = React.useState(false);
+	const [orderBy, setOrderBy] = React.useState("estado");
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [page, setPage] = React.useState(0);
+
+	const [selected, setSelected] = React.useState([]);
+	const [dense, setDense] = React.useState(false);
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
@@ -292,17 +290,17 @@ export const TareasListar = () => {
 				page * rowsPerPage,
 				page * rowsPerPage + rowsPerPage
 			),
-		[order, orderBy, page, rowsPerPage]
+		[order, orderBy, page, rowsPerPage, actualizarListar]
 	);
 
 	/* ================================= */
 	return (
-		<Box sx={{ width: "80%" }}>
+		<Box sx={{ width: "95%", maxWidth: "900px" }}>
 			<Paper sx={{ width: "100%", mb: 2 }}>
 				<EnhancedTableToolbar numSelected={selected.length} />
 				<TableContainer>
 					<Table
-						sx={{ minWidth: 500, bgcolor: "background.table" }}
+						sx={{ minWidth: 500, bgcolor: "background.tableRows" }}
 						aria-labelledby="tableTitle"
 						size={dense ? "small" : "medium"}
 					>
@@ -339,14 +337,8 @@ export const TareasListar = () => {
 												}}
 											/>
 										</TableCell>
-										<TableCell
-											component="th"
-											id={labelId}
-											scope="row"
-											padding="none"
-										>
-											{row.tarea}
-										</TableCell>
+
+										<TableCell align="center">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
 										<TableCell align="center">{row.fecha}</TableCell>
 										<TableCell align="center">

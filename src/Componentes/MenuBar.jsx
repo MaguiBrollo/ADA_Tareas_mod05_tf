@@ -16,15 +16,18 @@ import { Modo } from "./Modo";
 const pages = ["Nueva Tarea", "Buscar", "Filtrar"];
 
 /* ------------------------------------------------------ */
-export const MenuBar = ({ ColorModeContext }) => {
+export const MenuBar = ({ ColorModeContext, setOpen }) => {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
 	};
 
-	const handleCloseNavMenu = () => {
+	const handleCloseNavMenu = (e) => {
 		setAnchorElNav(null);
+		if (e.target.textContent.trim() === "Nueva Tarea") {
+			setOpen(true);
+		}
 	};
 
 	/* ============================== */
@@ -85,6 +88,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 						task IN order
 					</Typography>
 
+					{/* Menú horizontal */}
 					<Box
 						sx={{
 							flexGrow: 1,
@@ -111,6 +115,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 							</Button>
 						))}
 					</Box>
+
 					<Box
 						sx={{
 							flexGrow: 1,
@@ -131,6 +136,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 							<GiHamburgerMenu />
 						</IconButton>
 
+						{/* Menú Vertical desplegable */}
 						<Menu
 							id="menu-appbar"
 							anchorEl={anchorElNav}
@@ -160,7 +166,7 @@ export const MenuBar = ({ ColorModeContext }) => {
 										},
 									}}
 								>
-									<Typography>{page}</Typography>
+									<Typography>{page} </Typography>
 								</MenuItem>
 							))}
 						</Menu>
