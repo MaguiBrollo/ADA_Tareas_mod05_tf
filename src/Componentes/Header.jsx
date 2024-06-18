@@ -4,7 +4,9 @@ import { Box, CardMedia, Typography } from "@mui/material";
 import ImgLogo from "../assets/LogoTarea.png";
 import { Modo } from "./Modo";
 
+/*  ============================================  */
 export const Header = ({ ColorModeContext }) => {
+	//---------------------------------
 	return (
 		<Box
 			sx={{

@@ -15,7 +15,7 @@ import { Modo } from "./Modo";
 
 const pages = ["Nueva Tarea", "Buscar", "Filtrar"];
 
-/* ------------------------------------------------------ */
+/*  ============================================  */
 export const MenuBar = ({ ColorModeContext, setOpen }) => {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -30,7 +30,7 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 		}
 	};
 
-	/* ============================== */
+	/* ------------------------------------ */
 	return (
 		<AppBar position="static" sx={{ bgcolor: "background.paper" }}>
 			<Container

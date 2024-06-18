@@ -5,6 +5,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import { Box, Typography } from "@mui/material";
 
+//Fechas
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import { MenuBar } from "./Componentes/MenuBar";
 import { TareasListar } from "./Componentes/TareasListar";
 import { tareasArray } from "./utils/Datos";
@@ -12,14 +16,11 @@ import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
 import { TareaNueva } from "./Componentes/TareaNueva";
 
-//Fechas
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
 import "./App.css";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
+/*  ============================================  */
 function App() {
 	const [actualizarListar, setActualizarListar] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
@@ -104,6 +105,7 @@ function App() {
 		[mode]
 	);
 
+	//----------------------------------------
 	return (
 		<ColorModeContext.Provider value={colorMode}>
 			<ThemeProvider theme={theme}>

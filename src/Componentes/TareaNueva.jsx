@@ -42,7 +42,7 @@ function PaperComponent(props) {
 	);
 }
 
-/*  --------------------------------------------------   */
+/*  ============================================  */
 export const TareaNueva = ({
 	open,
 	setOpen,
@@ -102,8 +102,8 @@ export const TareaNueva = ({
 			const nuevoArrayTareas = [...tareasEnOrden];
 			const nf = dayjs(fecha).format("DD/MM/YYYY");
 
-			const nuevoArray = crearTarea(descripcion, categoria, nf, false);
-			nuevoArrayTareas.push(nuevoArray);
+			const nuevaTarea = crearTarea(descripcion, categoria, nf, false);
+			nuevoArrayTareas.push(nuevaTarea);
 			setTareasEnOrden(nuevoArrayTareas); //array para listar
 			setTareas(nuevoArrayTareas); //localstorage
 			setActualizarListar(true); //para que se renderice la tabla de Listar
@@ -127,7 +127,7 @@ export const TareaNueva = ({
 		});
 	};
 
-	/* ============================ */
+	/* ------------------------------------- */
 	return (
 		<>
 			<Dialog
