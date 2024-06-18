@@ -28,8 +28,19 @@ import { categorias } from "../utils/Datos";
 import { crearTarea } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
 
-const hoy = dayjs();
-//const ayer = dayjs().subtract(1, "day");
+//------------------------------------
+const sinAcentosMayus = (texto) => {
+	if (typeof texto === "string") {
+		texto = texto.replace(/[áäâà]/g, "a");
+		texto = texto.replace(/[éëêè]/g, "e");
+		texto = texto.replace(/[íïîì]/g, "i");
+		texto = texto.replace(/[óöôò]/g, "o");
+		texto = texto.replace(/[úüûù]/g, "u");
+		texto = texto.toUpperCase();
+	}
+	return texto;
+};
+
 //------------------------------------
 function PaperComponent(props) {
 	return (
@@ -42,7 +53,7 @@ function PaperComponent(props) {
 	);
 }
 
-/*  --------------------------------------------------   */
+/*  ============================================  */
 export const TareaNueva = ({
 	open,
 	setOpen,
@@ -52,10 +63,9 @@ export const TareaNueva = ({
 }) => {
 	const [errorDescripcion, setErrorDescripcion] = useState(false);
 	const [errorCategoria, setErrorCategoria] = useState(false);
-
-	/* const [fech, setFech] = useState(dayjs(new Date())); */
-
 	const [loading, setLoading] = useState(false);
+
+	const hoy = dayjs();
 	const [datosForm, setDatosForm] = useState({
 		descripcion: "",
 		categoria: " ",
@@ -64,26 +74,25 @@ export const TareaNueva = ({
 	const { descripcion, categoria, fecha } = datosForm;
 
 	const guardarDatos = (e) => {
-		setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
-
 		if (e.target.name === "descripcion") {
-			if (descripcion.length > 60) {
-				setErrorDescripcion(true);
-			} else {
-				setErrorDescripcion(false);
-			}
-			if (descripcion === "") {
-				setErrorDescripcion(true);
-			} else {
-				setErrorDescripcion(false);
-			}
+			setDatosForm({
+				...datosForm,
+				[e.target.name]: sinAcentosMayus(e.target.value),
+			});
+		} else {
+			setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
+		}
+		if (e.target.name === "descripcion") {
+			descripcion.length > 60
+				? setErrorDescripcion(true)
+				: setErrorDescripcion(false);
+
+			descripcion === ""
+				? setErrorDescripcion(true)
+				: setErrorDescripcion(false);
 		}
 		if (e.target.name === "categoria") {
-			if (categoria === "") {
-				setErrorCategoria(true);
-			} else {
-				setErrorCategoria(false);
-			}
+			categoria === "" ? setErrorCategoria(true) : setErrorCategoria(false);
 		}
 	};
 
@@ -102,14 +111,14 @@ export const TareaNueva = ({
 			const nuevoArrayTareas = [...tareasEnOrden];
 			const nf = dayjs(fecha).format("DD/MM/YYYY");
 
-			const nuevoArray = crearTarea(descripcion, categoria, nf, false);
-			nuevoArrayTareas.push(nuevoArray);
-			setTareasEnOrden(nuevoArrayTareas); //array para listar
-			setTareas(nuevoArrayTareas); //localstorage
-			setActualizarListar(true); //para que se renderice la tabla de Listar
+			const nuevaTarea = crearTarea(descripcion, categoria, nf, false);
+			nuevoArrayTareas.push(nuevaTarea);
 
 			setLoading(true);
 			setTimeout(() => {
+				setTareasEnOrden(nuevoArrayTareas); //array para listar
+				setTareas(nuevoArrayTareas); //localstorage
+				setActualizarListar(true); //para que se renderice la tabla ¿..?
 				setLoading(false);
 				cerrarTareaNueva();
 			}, 2000);
@@ -127,7 +136,7 @@ export const TareaNueva = ({
 		});
 	};
 
-	/* ============================ */
+	/* ------------------------------------- */
 	return (
 		<>
 			<Dialog

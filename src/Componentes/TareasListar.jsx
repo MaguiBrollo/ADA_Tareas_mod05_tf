@@ -24,6 +24,9 @@ import {
 import { MdDelete } from "react-icons/md";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
+import { MdOutlineEdit } from "react-icons/md";
+
+import { ModalMarcarHecho } from "./ModalMarcarHecho";
 
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
@@ -94,6 +97,7 @@ function EnhancedTableHead(props) {
 		rowCount,
 		onRequestSort,
 	} = props;
+
 	const createSortHandler = (property) => (event) => {
 		onRequestSort(event, property);
 	};
@@ -148,8 +152,10 @@ EnhancedTableHead.propTypes = {
 };
 
 //----------------------------------------------------
-function EnhancedTableToolbar(props) {
-	const { numSelected } = props;
+function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
+	const marcarComoHecho = () => {
+		setOpenModalHecho(true);
+	};
 
 	return (
 		<Toolbar
@@ -187,8 +193,24 @@ function EnhancedTableToolbar(props) {
 
 			{numSelected > 0 ? (
 				<>
+					{numSelected === 1 ? (
+						<Tooltip title="Editar una tarea">
+							<IconButton sx={{ color: "text.primary" }}>
+								<MdOutlineEdit />
+							</IconButton>
+						</Tooltip>
+					) : (
+						<Tooltip>
+							<IconButton sx={{ color: "text.iconos" }}>
+								<MdOutlineEdit />
+							</IconButton>
+						</Tooltip>
+					)}
 					<Tooltip title="Marcar como Tarea Realizada">
-						<IconButton sx={{ color: "text.primary" }}>
+						<IconButton
+							onClick={marcarComoHecho}
+							sx={{ color: "text.primary" }}
+						>
 							<MdOutlineTaskAlt />
 						</IconButton>
 					</Tooltip>
@@ -200,6 +222,11 @@ function EnhancedTableToolbar(props) {
 				</>
 			) : (
 				<>
+					<Tooltip>
+						<IconButton sx={{ color: "text.iconos" }}>
+							<MdOutlineEdit />
+						</IconButton>
+					</Tooltip>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
 							<MdOutlineTaskAlt />
@@ -220,8 +247,8 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-//----------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------- */
+/*  ============================================  */
+/*  ============================================  */
 export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
@@ -229,14 +256,20 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 	const [page, setPage] = React.useState(0);
 
 	const [selected, setSelected] = React.useState([]);
+
 	const [dense, setDense] = React.useState(false);
 
+	//---- Marcar como realizado
+	const [openModalHecho, setOpenModalHecho] = React.useState(false);
+
+	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
 		setOrderBy(property);
 	};
 
+	//---------------- Seleccionan TODAS las Tareas de una vez
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
 			const newSelected = tareasEnOrden.map((n) => n.id);
@@ -246,6 +279,7 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 		setSelected([]);
 	};
 
+	//---------------- Seleccionan de a UNA Tarea
 	const handleClick = (event, id) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected = [];
@@ -293,11 +327,14 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 		[order, orderBy, page, rowsPerPage, actualizarListar]
 	);
 
-	/* ================================= */
+	/* ---------------------------------------------- */
 	return (
 		<Box sx={{ width: "95%", maxWidth: "900px" }}>
 			<Paper sx={{ width: "100%", mb: 2 }}>
-				<EnhancedTableToolbar numSelected={selected.length} />
+				<EnhancedTableToolbar
+					numSelected={selected.length}
+					setOpenModalHecho={setOpenModalHecho}
+				/>
 				<TableContainer>
 					<Table
 						sx={{ minWidth: 500, bgcolor: "background.tableRows" }}
@@ -382,6 +419,15 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 					/>
 				}
 				label="Expandir"
+			/>
+
+			{/* Modal de Acepta marcar como Tarea Realizada*/}
+			<ModalMarcarHecho
+				setOpenModalHecho={setOpenModalHecho}
+				openModalHecho={openModalHecho}
+				selected={selected}
+				tareasEnOrden={tareasEnOrden}
+				setSelected={setSelected}
 			/>
 		</Box>
 	);

@@ -6,9 +6,12 @@ import { useTheme } from "@mui/material/styles";
 import { FaRegSun } from "react-icons/fa";
 import { FaRegMoon } from "react-icons/fa";
 
+/*  ============================================  */
 export const Modo = ({ ColorModeContext }) => {
 	const theme = useTheme();
 	const colorMode = React.useContext(ColorModeContext);
+
+	//-----------------------------------------
 	return (
 		<Box
 			sx={{
