@@ -32,17 +32,15 @@ export const ModalMarcarHecho = ({
 	const handleClose = () => {
 		setOpenModalHecho(false);
 	};
-	const handleCloseAcept = () => {
-		setOpenModalHecho(false);
 
-		console.log("ahora que hacmeos");
+	const handleCloseAcept = () => {
 		selected.forEach((sel) => {
 			const index = tareasEnOrden.findIndex((t) => t.id === sel);
 			tareasEnOrden[index].estado = true;
 		});
-
+		setOpenModalHecho(false);
 		setSelected([]);
-		setTareas(tareasEnOrden);
+		setTareas(tareasEnOrden); //LocalStorage
 	};
 
 	return (

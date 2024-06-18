@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import dayjs from "dayjs";
 
-export function crearTarea( tarea, categoria, fecha, estado) {
+export function crearTarea(tarea, categoria, fecha, estado) {
 	const id = uuidv4();
 	return {
 		id,
@@ -13,9 +14,9 @@ export function crearTarea( tarea, categoria, fecha, estado) {
 
 export const tareasArray = [
 	crearTarea(
-		"DESCRIPCION DE LA TAREA",
+		"DESCRIPCIÓN DE LA TAREA",
 		"VARIOS",
-		"01/01/2024",
+		dayjs().format("DD/MM/YYYY"),
 		false
 	),
 	/* 

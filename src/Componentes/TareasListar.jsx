@@ -24,7 +24,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
-import { GrEdit } from "react-icons/gr";
+import { MdOutlineEdit } from "react-icons/md";
 
 import { ModalMarcarHecho } from "./ModalMarcarHecho";
 
@@ -193,10 +193,16 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 
 			{numSelected > 0 ? (
 				<>
-					{numSelected === 1 && (
+					{numSelected === 1 ? (
 						<Tooltip title="Editar una tarea">
 							<IconButton sx={{ color: "text.primary" }}>
-								<GrEdit />
+								<MdOutlineEdit />
+							</IconButton>
+						</Tooltip>
+					) : (
+						<Tooltip>
+							<IconButton sx={{ color: "text.iconos" }}>
+								<MdOutlineEdit />
 							</IconButton>
 						</Tooltip>
 					)}
@@ -218,7 +224,7 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 				<>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<GrEdit />
+							<MdOutlineEdit />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
@@ -263,7 +269,7 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 		setOrderBy(property);
 	};
 
-	//---------------- Seleccionan TODAS las Tareas
+	//---------------- Seleccionan TODAS las Tareas de una vez
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
 			const newSelected = tareasEnOrden.map((n) => n.id);
@@ -415,14 +421,13 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 				label="Expandir"
 			/>
 
-			{/* Modal de Acepta marcar como hecho */}
+			{/* Modal de Acepta marcar como Tarea Realizada*/}
 			<ModalMarcarHecho
 				setOpenModalHecho={setOpenModalHecho}
 				openModalHecho={openModalHecho}
 				selected={selected}
 				tareasEnOrden={tareasEnOrden}
 				setSelected={setSelected}
-				
 			/>
 		</Box>
 	);

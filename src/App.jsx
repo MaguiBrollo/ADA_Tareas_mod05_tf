@@ -66,7 +66,7 @@ function App() {
 								text: {
 									primary: "#FFFFFF", //blanco
 									secondary: grey[200],
-									iconos: grey[600],
+									iconos: grey[800],
 								},
 								button: {
 									textHover: grey[200],
@@ -93,7 +93,7 @@ function App() {
 								text: {
 									primary: "#FFFFFF", //blanco
 									secondary: grey[200],
-									iconos: grey[600],
+									iconos: grey[800],
 								},
 								button: {
 									textHover: grey[200],
