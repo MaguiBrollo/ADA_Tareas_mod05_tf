@@ -27,6 +27,7 @@ import { GoQuestion } from "react-icons/go";
 import { MdOutlineEdit } from "react-icons/md";
 
 import { ModalMarcarHecho } from "./ModalMarcarHecho";
+import { ModalBorrarTareas } from "./ModalBorrarTareas";
 
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
@@ -152,9 +153,17 @@ EnhancedTableHead.propTypes = {
 };
 
 //----------------------------------------------------
-function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
+function EnhancedTableToolbar({
+	numSelected,
+	setOpenModalHecho,
+	setOpenModalBorrar,
+}) {
 	const marcarComoHecho = () => {
 		setOpenModalHecho(true);
+	};
+
+	const marcarBorrar = () => {
+		setOpenModalBorrar(true);
 	};
 
 	return (
@@ -215,7 +224,7 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 						</IconButton>
 					</Tooltip>
 					<Tooltip title="Eliminar tarea/s seleccionada/s">
-						<IconButton sx={{ color: "text.primary" }}>
+						<IconButton onClick={marcarBorrar} sx={{ color: "text.primary" }}>
 							<MdDelete />
 						</IconButton>
 					</Tooltip>
@@ -249,7 +258,10 @@ EnhancedTableToolbar.propTypes = {
 
 /*  ============================================  */
 /*  ============================================  */
-export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
+export const TareasListar = ({
+	tareasEnOrden,
+	setTareasEnOrden,
+}) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -259,8 +271,8 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 
 	const [dense, setDense] = React.useState(false);
 
-	//---- Marcar como realizado
 	const [openModalHecho, setOpenModalHecho] = React.useState(false);
+	const [openModalBorrar, setOpenModalBorrar] = React.useState(false);
 
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
@@ -324,7 +336,7 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 				page * rowsPerPage,
 				page * rowsPerPage + rowsPerPage
 			),
-		[order, orderBy, page, rowsPerPage, actualizarListar]
+		[order, orderBy, page, rowsPerPage, tareasEnOrden]
 	);
 
 	/* ---------------------------------------------- */
@@ -334,6 +346,7 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 				<EnhancedTableToolbar
 					numSelected={selected.length}
 					setOpenModalHecho={setOpenModalHecho}
+					setOpenModalBorrar={setOpenModalBorrar}
 				/>
 				<TableContainer>
 					<Table
@@ -423,11 +436,21 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 
 			{/* Modal de Acepta marcar como Tarea Realizada*/}
 			<ModalMarcarHecho
-				setOpenModalHecho={setOpenModalHecho}
 				openModalHecho={openModalHecho}
+				setOpenModalHecho={setOpenModalHecho}
 				selected={selected}
-				tareasEnOrden={tareasEnOrden}
 				setSelected={setSelected}
+				tareasEnOrden={tareasEnOrden}
+				setTareasEnOrden={setTareasEnOrden}
+			/>
+			{/* Modal de Acepta BORRAR Tarea/s */}
+			<ModalBorrarTareas
+				openModalBorrar={openModalBorrar}
+				setOpenModalBorrar={setOpenModalBorrar}
+				selected={selected}
+				setSelected={setSelected}
+				tareasEnOrden={tareasEnOrden}
+				setTareasEnOrden={setTareasEnOrden}
 			/>
 		</Box>
 	);

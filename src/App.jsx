@@ -22,7 +22,6 @@ const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 /*  ============================================  */
 function App() {
-	const [actualizarListar, setActualizarListar] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
@@ -138,7 +137,6 @@ function App() {
 						<TareasListar
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							actualizarListar={actualizarListar}
 						/>
 						{/*  ----  Nueva Tarea  -------*/}
 						<TareaNueva
@@ -146,7 +144,6 @@ function App() {
 							setOpen={setOpen}
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							setActualizarListar={setActualizarListar}
 						/>
 					</Box>
 				</LocalizationProvider>

@@ -59,7 +59,6 @@ export const TareaNueva = ({
 	setOpen,
 	tareasEnOrden,
 	setTareasEnOrden,
-	setActualizarListar,
 }) => {
 	const [errorDescripcion, setErrorDescripcion] = useState(false);
 	const [errorCategoria, setErrorCategoria] = useState(false);
@@ -118,7 +117,6 @@ export const TareaNueva = ({
 			setTimeout(() => {
 				setTareasEnOrden(nuevoArrayTareas); //array para listar
 				setTareas(nuevoArrayTareas); //localstorage
-				setActualizarListar(true); //para que se renderice la tabla ¿..?
 				setLoading(false);
 				cerrarTareaNueva();
 			}, 2000);
