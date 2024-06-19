@@ -19,21 +19,15 @@ export const ModalMarcarHecho = ({
 	openModalHecho,
 	setOpenModalHecho,
 	selected,
-	tareasEnOrden,
-
 	setSelected,
+	tareasEnOrden,
+	setTareasEnOrden,
 }) => {
-	/* const [open, setOpen] = React.useState(false); */
-
-	/* const handleClickOpen = () => {
-		setOpenModalHecho(true);
-	}; */
-
 	const handleClose = () => {
 		setOpenModalHecho(false);
 	};
 
-	const handleCloseAcept = () => {
+	const handleCloseMarcar = () => {
 		selected.forEach((sel) => {
 			const index = tareasEnOrden.findIndex((t) => t.id === sel);
 			tareasEnOrden[index].estado = true;
@@ -41,6 +35,7 @@ export const ModalMarcarHecho = ({
 		setOpenModalHecho(false);
 		setSelected([]);
 		setTareas(tareasEnOrden); //LocalStorage
+		setTareasEnOrden(tareasEnOrden) //Listar
 	};
 
 	return (
@@ -55,12 +50,12 @@ export const ModalMarcarHecho = ({
 				<DialogTitle>{"TAREAS SELECCIONADAS"}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
-						¿Desea marcar como TAREA REALIZADA a la/s tarea/s seleccionada/s?
+						¿Desea MARCAR como Tarea Realizada a la/s tarea/s seleccionada/s?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Cancelar</Button>
-					<Button onClick={handleCloseAcept}>Aceptar</Button>
+					<Button onClick={handleCloseMarcar}>Marcar</Button>
 				</DialogActions>
 			</Dialog>
 		</React.Fragment>
