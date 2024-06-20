@@ -16,42 +16,16 @@ export const tareasArray = [
 	crearTarea(
 		"DESCRIPCIÓN DE LA TAREA",
 		"VARIOS",
-		dayjs().format("DD/MM/YYYY"),
+		dayjs().format("YYYY/MM/DD"),
 		false
 	),
-	/* 
-	crearTarea( "COMPRAR CESPED", "VARIOS", "01/01/2024", false),
-	crearTarea( "BUSCAR TORTA DIA DEL PADRE ", "ALIMENTOS", "15/07/2024", false),
-	crearTarea( "SUPERMERCADO", "ALIMENTOS", "15/07/2024", false),
-	crearTarea("VERDULERIA", "ALIMENTOS", "14/07/2024", true),
-	crearTarea("ANSES TURNO", "TRAMITES", "14/07/2024", true),
-	crearTarea("MANDAR PAPELES INSEEP", "TRAMITES", "01/01/2024", false),
-	crearTarea( "REGAR LAS PLANTAS", "HOGAR", "01/01/2024", false), */
 ];
 
 export const categorias = [
-	{
-		id: uuidv4(),
-		nombre: "ALIMENTOS",
-	},
-	{
-		id: uuidv4(),
-		nombre: "HOGAR",
-	},
-	{
-		id: uuidv4(),
-		nombre: "EDUCACION",
-	},
-	{
-		id: uuidv4(),
-		nombre: "SALUD",
-	},
-	{
-		id: uuidv4(),
-		nombre: "TRAMITES",
-	},
-	{
-		id: uuidv4(),
-		nombre: "VARIOS",
-	},
+	"EDUCACION",
+	"FAMILIA Y AMIGOS",
+	"HOGAR",
+	"SALUD",
+	"TRAMITES",
+	"VARIOS",
 ];
