@@ -15,9 +15,9 @@ import {
 import { useState } from "react";
 import Draggable from "react-draggable";
 import { IoMoveSharp } from "react-icons/io5";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 
 //fecha
 import dayjs from "dayjs";
@@ -25,7 +25,6 @@ import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { categorias } from "../utils/Datos";
-import { crearTarea } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
 
 //------------------------------------
@@ -53,10 +52,11 @@ function PaperComponent(props) {
 	);
 }
 
-/*  ============================================  */
-export const TareaNueva = ({
-	open,
-	setOpen,
+export const TareaEditar = ({
+	openTareaEditar,
+	setOpenTareaEditar,
+	selected,
+	setSelected,
 	tareasEnOrden,
 	setTareasEnOrden,
 }) => {
@@ -65,13 +65,19 @@ export const TareaNueva = ({
 	const [loading, setLoading] = useState(false);
 
 	const hoy = dayjs();
-	const [datosForm, setDatosForm] = useState({
-		tarea: "",
-		categoria: "S",
-		fecha: hoy,
-	});
-	const { tarea, categoria, fecha } = datosForm;
+	// const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
 
+	const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
+
+	const [datosForm, setDatosForm] = useState({
+		id: tareaParaEditar.id,
+		tarea: tareaParaEditar.tarea,
+		categoria: tareaParaEditar.categoria,
+		fecha: dayjs(tareaParaEditar.fecha),
+		estado: tareaParaEditar.estado,
+	});
+
+	let { id, tarea, categoria, fecha, estado } = datosForm;
 	const guardarDatos = (e) => {
 		if (e.target.name === "tarea") {
 			setDatosForm({
@@ -94,49 +100,63 @@ export const TareaNueva = ({
 		}
 	};
 
-	const handleSubmit = (tarea, categoria, fecha) => {
+	const handleSubmitEdit = (tarea, categoria, fecha) => {
 		if (tarea.length < 5 || tarea.length > 60) {
 			setErrorTarea(true);
 		} else {
 			setErrorTarea(false);
+
 			if (categoria === "S") {
 				setErrorCategoria(true);
 			} else {
 				setErrorCategoria(false);
 
-				//------ guardar ------------------
-				const nuevoArrayTareas = [...tareasEnOrden];
-				const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
-				const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
-				nuevoArrayTareas.push(nuevaTarea);
+				//------ guardar EDITAR ------------------
+				const nuevoTareasEnOrden = [];
+				tareasEnOrden.forEach((t) => {
+					if (t.id === selected[0]) {
+						nuevoTareasEnOrden.push({
+							id: id,
+							tarea: tarea,
+							categoria: categoria,
+							fecha: dayjs(fecha).format("YYYY/MM/DD"),
+							estado: estado,
+						});
+					} else {
+						nuevoTareasEnOrden.push({
+							id: t.id,
+							tarea: t.tarea,
+							categoria: t.categoria,
+							fecha: t.fecha,
+							estado: t.estado,
+						});
+					}
+				});
+
+				setSelected([]);
 
 				setLoading(true);
 				setTimeout(() => {
-					setTareasEnOrden(nuevoArrayTareas); //array para listar
-					setTareas(nuevoArrayTareas); //localstorage
+					setTareasEnOrden(nuevoTareasEnOrden); //Listar
+					setTareas(nuevoTareasEnOrden); //LocalStorage
 					setLoading(false);
-					cerrarTareaNueva();
+					cerrarTareaEditar();
 				}, 2000);
 			}
 		}
 	};
 
-	const cerrarTareaNueva = () => {
-		setOpen(false);
+	const cerrarTareaEditar = () => {
+		setOpenTareaEditar(false);
 		setErrorCategoria(false);
 		setErrorTarea(false);
-		setDatosForm({
-			tarea: "",
-			categoria: "S",
-			fecha: hoy,
-		});
 	};
 
 	/* ------------------------------------- */
 	return (
 		<>
 			<Dialog
-				open={open}
+				open={openTareaEditar}
 				PaperComponent={PaperComponent}
 				aria-labelledby="draggable-dialog-title"
 				maxWidth="sm"
@@ -153,7 +173,7 @@ export const TareaNueva = ({
 						justifyContent: "space-between",
 					}}
 				>
-					Nueva Tarea
+					Editar Tarea
 					<Box component="span">
 						<IoMoveSharp />
 					</Box>
@@ -168,7 +188,7 @@ export const TareaNueva = ({
 							fontSize: "1rem",
 						}}
 					>
-						Ingrese los datos de la nueva tarea.
+						Edite los datos de la tarea.
 					</Typography>
 
 					<Box
@@ -248,7 +268,7 @@ export const TareaNueva = ({
 					<DialogActions>
 						<Button
 							autoFocus
-							onClick={cerrarTareaNueva}
+							onClick={cerrarTareaEditar}
 							endIcon={<MdOutlineCancel />}
 							sx={{
 								color: "text.primary",
@@ -263,10 +283,10 @@ export const TareaNueva = ({
 						</Button>
 
 						<LoadingButton
-							onClick={() => handleSubmit(tarea, categoria, fecha)}
+							onClick={() => handleSubmitEdit(tarea, categoria, fecha)}
 							loading={loading}
 							loadingPosition="end"
-							endIcon={<IoMdAddCircleOutline />}
+							endIcon={<MdOutlineEdit />}
 							variant="contained"
 							sx={{
 								color: "text.primary",
@@ -277,7 +297,7 @@ export const TareaNueva = ({
 								},
 							}}
 						>
-							<span>Guardar</span>
+							<span>Editar</span>
 						</LoadingButton>
 					</DialogActions>
 				</Box>

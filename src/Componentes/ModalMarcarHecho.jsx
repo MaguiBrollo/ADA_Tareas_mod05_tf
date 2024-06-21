@@ -28,14 +28,33 @@ export const ModalMarcarHecho = ({
 	};
 
 	const handleCloseMarcar = () => {
-		selected.forEach((sel) => {
-			const index = tareasEnOrden.findIndex((t) => t.id === sel);
-			tareasEnOrden[index].estado = true;
+		const nuevoTareasEnOrden = [];
+
+		tareasEnOrden.forEach((t) => {
+			if (selected.some((s) => s === t.id)) {
+				nuevoTareasEnOrden.push({
+					id: t.id,
+					tarea: t.tarea,
+					categoria: t.categoria,
+					fecha: t.fecha,
+					estado: !t.estado,
+				});
+			} else {
+				nuevoTareasEnOrden.push({
+					id: t.id,
+					tarea: t.tarea,
+					categoria: t.categoria,
+					fecha: t.fecha,
+					estado: t.estado,
+				});
+			}
 		});
+
+		setTareasEnOrden(nuevoTareasEnOrden); //Listar
+		setTareas(nuevoTareasEnOrden); //LocalStorage
+
 		setOpenModalHecho(false);
 		setSelected([]);
-		setTareas(tareasEnOrden); //LocalStorage
-		setTareasEnOrden(tareasEnOrden) //Listar
 	};
 
 	return (

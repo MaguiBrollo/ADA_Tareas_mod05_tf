@@ -22,12 +22,18 @@ import {
 } from "@mui/material";
 
 import { MdDelete } from "react-icons/md";
-import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
-import { MdOutlineEdit } from "react-icons/md";
+import { RiTaskLine } from "react-icons/ri";
+import { BiSolidEdit } from "react-icons/bi";
+import { MdOutlineAddBox } from "react-icons/md";
 
+import { TareaNueva } from "./TareaNueva";
 import { ModalMarcarHecho } from "./ModalMarcarHecho";
 import { ModalBorrarTareas } from "./ModalBorrarTareas";
+import { TareaEditar } from "./TareaEditar";
+import { ModalNoEditar } from "./ModalNoEditar";
+
+import dayjs from "dayjs";
 
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
@@ -157,7 +163,27 @@ function EnhancedTableToolbar({
 	numSelected,
 	setOpenModalHecho,
 	setOpenModalBorrar,
+	setOpenTareaEditar,
+	tareasEnOrden,
+	selected,
+	setOpenNoEditar,
+	setOpen
 }) {
+
+	const nuevaTarea = () => {
+		setOpen(true);
+	};
+
+	const editarTareaSeleccionada = () => {
+		const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
+		if (tareasEnOrden[index].estado) {
+			//abrir modal
+			setOpenNoEditar(true);
+		} else {
+			setOpenTareaEditar(true);
+		}
+	};
+
 	const marcarComoHecho = () => {
 		setOpenModalHecho(true);
 	};
@@ -200,18 +226,29 @@ function EnhancedTableToolbar({
 				</Typography>
 			)}
 
+			<Tooltip title="Agregar una tareas">
+				<IconButton
+					onClick={nuevaTarea}
+					sx={{ color: "text.primary" }}
+				>
+					<MdOutlineAddBox />
+				</IconButton>
+			</Tooltip>
 			{numSelected > 0 ? (
 				<>
 					{numSelected === 1 ? (
 						<Tooltip title="Editar una tarea">
-							<IconButton sx={{ color: "text.primary" }}>
-								<MdOutlineEdit />
+							<IconButton
+								onClick={editarTareaSeleccionada}
+								sx={{ color: "text.primary" }}
+							>
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					) : (
 						<Tooltip>
 							<IconButton sx={{ color: "text.iconos" }}>
-								<MdOutlineEdit />
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					)}
@@ -220,7 +257,7 @@ function EnhancedTableToolbar({
 							onClick={marcarComoHecho}
 							sx={{ color: "text.primary" }}
 						>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip title="Eliminar tarea/s seleccionada/s">
@@ -233,12 +270,12 @@ function EnhancedTableToolbar({
 				<>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineEdit />
+							<BiSolidEdit />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
@@ -252,16 +289,9 @@ function EnhancedTableToolbar({
 	);
 }
 
-EnhancedTableToolbar.propTypes = {
-	numSelected: PropTypes.number.isRequired,
-};
-
 /*  ============================================  */
 /*  ============================================  */
-export const TareasListar = ({
-	tareasEnOrden,
-	setTareasEnOrden,
-}) => {
+export const TareasListar = ({ tareasEnOrden, setTareasEnOrden }) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -271,8 +301,11 @@ export const TareasListar = ({
 
 	const [dense, setDense] = React.useState(false);
 
+	const [open, setOpen] = React.useState(false);//nueva tarea
 	const [openModalHecho, setOpenModalHecho] = React.useState(false);
 	const [openModalBorrar, setOpenModalBorrar] = React.useState(false);
+	const [openTareaEditar, setOpenTareaEditar] = React.useState(false);
+	const [openNoEditar, setOpenNoEditar] = React.useState(false);
 
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
@@ -347,6 +380,11 @@ export const TareasListar = ({
 					numSelected={selected.length}
 					setOpenModalHecho={setOpenModalHecho}
 					setOpenModalBorrar={setOpenModalBorrar}
+					setOpenTareaEditar={setOpenTareaEditar}
+					tareasEnOrden={tareasEnOrden}
+					selected={selected}
+					setOpenNoEditar={setOpenNoEditar}
+					setOpen={setOpen}
 				/>
 				<TableContainer>
 					<Table
@@ -390,10 +428,12 @@ export const TareasListar = ({
 
 										<TableCell align="center">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
-										<TableCell align="center">{row.fecha}</TableCell>
+										<TableCell align="center">
+											{dayjs(row.fecha).format("DD/MM/YYYY")}
+										</TableCell>
 										<TableCell align="center">
 											{row.estado ? (
-												<MdOutlineTaskAlt color="black" />
+												<RiTaskLine color="black" />
 											) : (
 												<GoQuestion />
 											)}
@@ -433,8 +473,13 @@ export const TareasListar = ({
 				}
 				label="Expandir"
 			/>
-
-			{/* Modal de Acepta marcar como Tarea Realizada*/}
+			<TareaNueva
+				open={open}
+				setOpen={setOpen}
+				tareasEnOrden={tareasEnOrden}
+				setTareasEnOrden={setTareasEnOrden}
+			/>
+			{/* ------- Modal de Acepta marcar como Tarea Realizada ------- */}
 			<ModalMarcarHecho
 				openModalHecho={openModalHecho}
 				setOpenModalHecho={setOpenModalHecho}
@@ -443,7 +488,7 @@ export const TareasListar = ({
 				tareasEnOrden={tareasEnOrden}
 				setTareasEnOrden={setTareasEnOrden}
 			/>
-			{/* Modal de Acepta BORRAR Tarea/s */}
+			{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
 			<ModalBorrarTareas
 				openModalBorrar={openModalBorrar}
 				setOpenModalBorrar={setOpenModalBorrar}
@@ -451,6 +496,24 @@ export const TareasListar = ({
 				setSelected={setSelected}
 				tareasEnOrden={tareasEnOrden}
 				setTareasEnOrden={setTareasEnOrden}
+			/>
+
+			{/* ------- Editar Tarea  -------*/}
+			{selected.length > 0 && (
+				<TareaEditar
+					openTareaEditar={openTareaEditar}
+					setOpenTareaEditar={setOpenTareaEditar}
+					selected={selected}
+					setSelected={setSelected}
+					tareasEnOrden={tareasEnOrden}
+					setTareasEnOrden={setTareasEnOrden}
+				/>
+			)}
+
+			{/*  -------  Modal No se puede Editar Tarea  -------*/}
+			<ModalNoEditar
+				openNoEditar={openNoEditar}
+				setOpenNoEditar={setOpenNoEditar}
 			/>
 		</Box>
 	);

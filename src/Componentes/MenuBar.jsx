@@ -13,21 +13,23 @@ import { Button, CardMedia, MenuItem } from "@mui/material";
 import ImgLogo from "../assets/LogoTarea.png";
 import { Modo } from "./Modo";
 
-const pages = ["Nueva Tarea", "Buscar", "Filtrar"];
+const pages = ["Todas", "Realizadas", "No Realizadas"];
 
 /*  ============================================  */
-export const MenuBar = ({ ColorModeContext, setOpen }) => {
+export const MenuBar = ({ ColorModeContext }) => {
+	//, setOpen
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
 	};
 
-	const handleCloseNavMenu = (e) => {
+	const handleCloseNavMenu = () => {
+		//e
 		setAnchorElNav(null);
-		if (e.target.textContent.trim() === "Nueva Tarea") {
-			setOpen(true);
-		}
+		/* if (e.target.textContent.trim() === "xx") {
+			
+		} */
 	};
 
 	/* ------------------------------------ */
@@ -96,6 +98,8 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 							justifyContent: "flex-end",
 						}}
 					>
+						<Typography>Filtrar Tareas: </Typography>
+
 						{pages.map((page) => (
 							<Button
 								key={page}

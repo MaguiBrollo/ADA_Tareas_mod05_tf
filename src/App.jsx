@@ -14,7 +14,7 @@ import { TareasListar } from "./Componentes/TareasListar";
 import { tareasArray } from "./utils/Datos";
 import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
-import { TareaNueva } from "./Componentes/TareaNueva";
+/* import { TareaNueva } from "./Componentes/TareaNueva"; */
 
 import "./App.css";
 
@@ -22,7 +22,7 @@ const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 /*  ============================================  */
 function App() {
-	const [open, setOpen] = React.useState(false);
+	/* const [open, setOpen] = React.useState(false); */
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
@@ -120,7 +120,8 @@ function App() {
 						}}
 					>
 						{/*  ----  NavBar  -------*/}
-						<MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} />
+						{/* <MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} /> */}
+						<MenuBar ColorModeContext={ColorModeContext} />
 						{/*  ----  Título  -------*/}
 						<Typography
 							sx={{
@@ -139,12 +140,12 @@ function App() {
 							setTareasEnOrden={setTareasEnOrden}
 						/>
 						{/*  ----  Nueva Tarea  -------*/}
-						<TareaNueva
+						{/* <TareaNueva
 							open={open}
 							setOpen={setOpen}
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-						/>
+						/> */}
 					</Box>
 				</LocalizationProvider>
 			</ThemeProvider>
