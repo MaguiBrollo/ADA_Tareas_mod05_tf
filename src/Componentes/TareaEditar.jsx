@@ -65,18 +65,19 @@ export const TareaEditar = ({
 	const [loading, setLoading] = useState(false);
 
 	const hoy = dayjs();
-	const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
+	// const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
 
-	console.log("EDITindex", index);
+	const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
 
 	const [datosForm, setDatosForm] = useState({
-		tarea: tareasEnOrden[index].tarea,
-		categoria: tareasEnOrden[index].categoria,
-		fecha: dayjs(tareasEnOrden[index].fecha),
+		id: tareaParaEditar.id,
+		tarea: tareaParaEditar.tarea,
+		categoria: tareaParaEditar.categoria,
+		fecha: dayjs(tareaParaEditar.fecha),
+		estado: tareaParaEditar.estado,
 	});
 
-	let { tarea, categoria, fecha } = datosForm;
-
+	let { id, tarea, categoria, fecha, estado } = datosForm;
 	const guardarDatos = (e) => {
 		if (e.target.name === "tarea") {
 			setDatosForm({
@@ -111,16 +112,33 @@ export const TareaEditar = ({
 				setErrorCategoria(false);
 
 				//------ guardar EDITAR ------------------
-				tareasEnOrden[index].tarea = tarea;
-				tareasEnOrden[index].categoria = categoria;
-				tareasEnOrden[index].fecha = dayjs(fecha).format("YYYY/MM/DD");
+				const nuevoTareasEnOrden = [];
+				tareasEnOrden.forEach((t) => {
+					if (t.id === selected[0]) {
+						nuevoTareasEnOrden.push({
+							id: id,
+							tarea: tarea,
+							categoria: categoria,
+							fecha: dayjs(fecha).format("YYYY/MM/DD"),
+							estado: estado,
+						});
+					} else {
+						nuevoTareasEnOrden.push({
+							id: t.id,
+							tarea: t.tarea,
+							categoria: t.categoria,
+							fecha: t.fecha,
+							estado: t.estado,
+						});
+					}
+				});
+
 				setSelected([]);
 
-				console.log(tareasEnOrden);
 				setLoading(true);
 				setTimeout(() => {
-					setTareasEnOrden(tareasEnOrden); //array para listar
-					setTareas(tareasEnOrden); //localstorage
+					setTareasEnOrden(nuevoTareasEnOrden); //Listar
+					setTareas(nuevoTareasEnOrden); //LocalStorage
 					setLoading(false);
 					cerrarTareaEditar();
 				}, 2000);

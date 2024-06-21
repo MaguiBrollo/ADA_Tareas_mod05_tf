@@ -22,10 +22,12 @@ import {
 } from "@mui/material";
 
 import { MdDelete } from "react-icons/md";
-import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
-import { MdOutlineEdit } from "react-icons/md";
+import { RiTaskLine } from "react-icons/ri";
+import { BiSolidEdit } from "react-icons/bi";
+import { MdOutlineAddBox } from "react-icons/md";
 
+import { TareaNueva } from "./TareaNueva";
 import { ModalMarcarHecho } from "./ModalMarcarHecho";
 import { ModalBorrarTareas } from "./ModalBorrarTareas";
 import { TareaEditar } from "./TareaEditar";
@@ -165,7 +167,13 @@ function EnhancedTableToolbar({
 	tareasEnOrden,
 	selected,
 	setOpenNoEditar,
+	setOpen
 }) {
+
+	const nuevaTarea = () => {
+		setOpen(true);
+	};
+
 	const editarTareaSeleccionada = () => {
 		const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
 		if (tareasEnOrden[index].estado) {
@@ -218,6 +226,14 @@ function EnhancedTableToolbar({
 				</Typography>
 			)}
 
+			<Tooltip title="Agregar una tareas">
+				<IconButton
+					onClick={nuevaTarea}
+					sx={{ color: "text.primary" }}
+				>
+					<MdOutlineAddBox />
+				</IconButton>
+			</Tooltip>
 			{numSelected > 0 ? (
 				<>
 					{numSelected === 1 ? (
@@ -226,13 +242,13 @@ function EnhancedTableToolbar({
 								onClick={editarTareaSeleccionada}
 								sx={{ color: "text.primary" }}
 							>
-								<MdOutlineEdit />
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					) : (
 						<Tooltip>
 							<IconButton sx={{ color: "text.iconos" }}>
-								<MdOutlineEdit />
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					)}
@@ -241,7 +257,7 @@ function EnhancedTableToolbar({
 							onClick={marcarComoHecho}
 							sx={{ color: "text.primary" }}
 						>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip title="Eliminar tarea/s seleccionada/s">
@@ -254,12 +270,12 @@ function EnhancedTableToolbar({
 				<>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineEdit />
+							<BiSolidEdit />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
@@ -285,6 +301,7 @@ export const TareasListar = ({ tareasEnOrden, setTareasEnOrden }) => {
 
 	const [dense, setDense] = React.useState(false);
 
+	const [open, setOpen] = React.useState(false);//nueva tarea
 	const [openModalHecho, setOpenModalHecho] = React.useState(false);
 	const [openModalBorrar, setOpenModalBorrar] = React.useState(false);
 	const [openTareaEditar, setOpenTareaEditar] = React.useState(false);
@@ -367,6 +384,7 @@ export const TareasListar = ({ tareasEnOrden, setTareasEnOrden }) => {
 					tareasEnOrden={tareasEnOrden}
 					selected={selected}
 					setOpenNoEditar={setOpenNoEditar}
+					setOpen={setOpen}
 				/>
 				<TableContainer>
 					<Table
@@ -415,7 +433,7 @@ export const TareasListar = ({ tareasEnOrden, setTareasEnOrden }) => {
 										</TableCell>
 										<TableCell align="center">
 											{row.estado ? (
-												<MdOutlineTaskAlt color="black" />
+												<RiTaskLine color="black" />
 											) : (
 												<GoQuestion />
 											)}
@@ -455,7 +473,12 @@ export const TareasListar = ({ tareasEnOrden, setTareasEnOrden }) => {
 				}
 				label="Expandir"
 			/>
-
+			<TareaNueva
+				open={open}
+				setOpen={setOpen}
+				tareasEnOrden={tareasEnOrden}
+				setTareasEnOrden={setTareasEnOrden}
+			/>
 			{/* ------- Modal de Acepta marcar como Tarea Realizada ------- */}
 			<ModalMarcarHecho
 				openModalHecho={openModalHecho}
