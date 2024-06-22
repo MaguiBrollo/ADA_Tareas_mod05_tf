@@ -12,7 +12,7 @@ import {
 	Typography,
 	InputLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { IoMoveSharp } from "react-icons/io5";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -26,7 +26,6 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { categorias } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
-import { getTareas } from "../utils/LocalStorage";
 
 //------------------------------------
 const sinAcentosMayus = (texto) => {
@@ -58,22 +57,35 @@ export const TareaEditar = ({
 	setOpenTareaEditar,
 	selected,
 	setSelected,
-	tareasEnOrden,
 	setTareasEnOrden,
+	auxTareas,
+
 	setTipoFiltro,
 }) => {
 	const [errorTarea, setErrorTarea] = useState(false);
 	const [errorCategoria, setErrorCategoria] = useState(false);
 	const [loading, setLoading] = useState(false);
-
-	const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
 	const [datosForm, setDatosForm] = useState({
-		id: tareaParaEditar.id,
-		tarea: tareaParaEditar.tarea,
-		categoria: tareaParaEditar.categoria,
-		fecha: dayjs(tareaParaEditar.fecha),
-		estado: tareaParaEditar.estado,
+		id: "",
+		tarea: "",
+		categoria: "VARIOS",
+		fecha: dayjs(),
+		estado: false,
 	});
+
+	//Para que no se genere un infinito, encerré el if en unuseEffect.
+	useEffect(() => {
+		if (selected.length > 0 && auxTareas.length > 0) {
+			const tareaParaEditar = auxTareas.find((t) => t.id === selected[0]);
+			setDatosForm({
+				id: tareaParaEditar.id,
+				tarea: tareaParaEditar.tarea,
+				categoria: tareaParaEditar.categoria,
+				fecha: dayjs(tareaParaEditar.fecha),
+				estado: tareaParaEditar.estado,
+			});
+		}
+	}, [selected, auxTareas]);
 
 	let { id, tarea, categoria, fecha, estado } = datosForm;
 	const guardarDatos = (e) => {
@@ -110,8 +122,8 @@ export const TareaEditar = ({
 				setErrorCategoria(false);
 
 				//------ guardar EDITAR ------------------
-				setTareasEnOrden(getTareas()); //por si está filtrado
-				const nuevoTareasEnOrden = tareasEnOrden.map((t) => {
+				//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
+				const nuevoTareasEnOrden = auxTareas.map((t) => {
 					if (t.id === selected[0]) {
 						return {
 							id: id,
@@ -137,9 +149,9 @@ export const TareaEditar = ({
 				setTimeout(() => {
 					setTareasEnOrden(nuevoTareasEnOrden); //Listar
 					setTareas(nuevoTareasEnOrden); //LocalStorage
-					setTipoFiltro("TODAS");
 					setLoading(false);
 					cerrarTareaEditar();
+					setTipoFiltro("TODAS"); //solo para mostrar el texto
 				}, 2000);
 			}
 		}

@@ -12,7 +12,8 @@ import {
 	Typography,
 	InputLabel,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import Draggable from "react-draggable";
 import { IoMoveSharp } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -27,7 +28,6 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { categorias } from "../utils/Datos";
 import { crearTarea } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
-import { getTareas } from "../utils/LocalStorage";
 
 //------------------------------------
 const sinAcentosMayus = (texto) => {
@@ -56,10 +56,10 @@ function PaperComponent(props) {
 
 /*  ============================================  */
 export const TareaNueva = ({
-	open,
-	setOpen,
-	tareasEnOrden,
+	openTareaNueva,
+	setOpenTareaNueva,
 	setTareasEnOrden,
+	auxTareas,
 	setTipoFiltro,
 }) => {
 	const [errorTarea, setErrorTarea] = useState(false);
@@ -97,9 +97,6 @@ export const TareaNueva = ({
 	};
 
 	//---- Para guardar en el LS y actualizar el array de la tabla
-
-
-	
 	const handleSubmit = (tarea, categoria, fecha) => {
 		if (tarea.length < 5 || tarea.length > 65) {
 			setErrorTarea(true);
@@ -111,32 +108,28 @@ export const TareaNueva = ({
 				setErrorCategoria(false);
 
 				//------ guardar ------------------
-				console.log("Antes");
-				console.log(tareasEnOrden);
-
-				
-				setTareasEnOrden(getTareas()); //por si está filtrado
-				
-				const nuevoArrayTareas = [...tareasEnOrden];
+				//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
+				const nuevoArrayTareas = [...auxTareas];
 				const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
 				const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
-				
+
 				nuevoArrayTareas.push(nuevaTarea);
 
 				setLoading(true);
 				setTimeout(() => {
 					setTareasEnOrden(nuevoArrayTareas); //array para listar
 					setTareas(nuevoArrayTareas); //localstorage
-					setTipoFiltro("TODAS");
+
 					setLoading(false);
 					cerrarTareaNueva();
-				}, 2000); 
+					setTipoFiltro("TODAS"); //solo para mostrar el texto
+				}, 2000);
 			}
 		}
 	};
 
 	const cerrarTareaNueva = () => {
-		setOpen(false);
+		setOpenTareaNueva(false);
 		setErrorCategoria(false);
 		setErrorTarea(false);
 		setDatosForm({
@@ -150,7 +143,7 @@ export const TareaNueva = ({
 	return (
 		<>
 			<Dialog
-				open={open}
+				open={openTareaNueva}
 				PaperComponent={PaperComponent}
 				aria-labelledby="draggable-dialog-title"
 				maxWidth="sm"

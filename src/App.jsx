@@ -15,6 +15,12 @@ import { tareasArray } from "./utils/Datos";
 import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
 
+import { TareaNueva } from "./Componentes/TareaNueva";
+import { ModalMarcarHecho } from "./Componentes/ModalMarcarHecho";
+import { TareaBorrar } from "./Componentes/TareaBorrar";
+import { TareaEditar } from "./Componentes/TareaEditar";
+import { ModalNoEditar } from "./Componentes/ModalNoEditar";
+
 import "./App.css";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -24,12 +30,39 @@ function App() {
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
+	const [auxTareas, setAuxTareas] = React.useState([]);
+	const [selected, setSelected] = React.useState([]); //array se seleccionados
+
+	const [openTareaNueva, setOpenTareaNueva] = React.useState(false);
+	const [openModalHecho, setOpenModalHecho] = React.useState(false);
+	const [openModalBorrar, setOpenModalBorrar] = React.useState(false);
+	const [openTareaEditar, setOpenTareaEditar] = React.useState(false);
+	const [openNoEditar, setOpenNoEditar] = React.useState(false);
 	const [tipoFiltro, setTipoFiltro] = React.useState("todas");
 
+	React.useEffect(() => {
+		//const pages = ["TODAS", "REALIZADAS", "NO REALIZADAS"]; (MenuBar.jsx)
+		let nuevoTareasFiltrado = [];
+		if (tipoFiltro === "REALIZADAS") {
+			nuevoTareasFiltrado = tareasEnOrden.filter((t) => {
+				return t.estado;
+			});
+		} else {
+			if (tipoFiltro === "NO REALIZADAS") {
+				nuevoTareasFiltrado = tareasEnOrden.filter((t) => {
+					return !t.estado;
+				});
+			} else {
+				nuevoTareasFiltrado = [...tareasEnOrden];
+			}
+		}
+		setTareasEnOrden(nuevoTareasFiltrado);
+	}, [tipoFiltro]);
+
+	//--------------------- Modo Claro Oscuro
 	const [mode, setMode] = React.useState(
 		localStorage.getItem("modoClaroOscuro") || "light"
 	);
-
 	localStorage.setItem("modoClaroOscuro", mode);
 	const colorMode = React.useMemo(
 		() => ({
@@ -40,6 +73,7 @@ function App() {
 		[]
 	);
 
+	//--------------------- Paleta de colores para Modo Claro Oscuro
 	const theme = React.useMemo(
 		() =>
 			createTheme({
@@ -47,7 +81,7 @@ function App() {
 					mode,
 					...(mode === "dark"
 						? {
-								// Valores para MDOD dark
+								// Valores para MODO dark
 
 								primary: {
 									main: grey[200],
@@ -72,7 +106,7 @@ function App() {
 								},
 						  }
 						: {
-								// Valores para MDOD light
+								// Valores para MODO light
 
 								primary: {
 									main: "#2A2239",
@@ -138,10 +172,67 @@ function App() {
 						</Typography>
 						{/*  ----  TAREAS LISTAR TODAS  -------*/}
 						<TareasListar
+							selected={selected}
+							setSelected={setSelected}
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							tipoFiltro={tipoFiltro}
+							auxTareas={auxTareas}
+							setAuxTareas={setAuxTareas}
+							setOpenTareaNueva={setOpenTareaNueva}
+							setOpenModalHecho={setOpenModalHecho}
+							setOpenModalBorrar={setOpenModalBorrar}
+							setOpenTareaEditar={setOpenTareaEditar}
+							setOpenNoEditar={setOpenNoEditar}
+						/>
+						{/* ------- Modal de Tarea Nueva ------- */}
+						<TareaNueva
+							openTareaNueva={openTareaNueva}
+							setOpenTareaNueva={setOpenTareaNueva}
+							setTareasEnOrden={setTareasEnOrden}
+							auxTareas={auxTareas}
+							
 							setTipoFiltro={setTipoFiltro}
+						/>
+						{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
+						<TareaBorrar
+							openModalBorrar={openModalBorrar}
+							setOpenModalBorrar={setOpenModalBorrar}
+							selected={selected}
+							setSelected={setSelected}
+							setTareasEnOrden={setTareasEnOrden}
+							auxTareas={auxTareas}
+							
+							setTipoFiltro={setTipoFiltro}
+						/>
+						{/* ------- Editar Tarea  -------*/}
+						{selected.length > 0 && (
+							<TareaEditar
+								openTareaEditar={openTareaEditar}
+								setOpenTareaEditar={setOpenTareaEditar}
+								selected={selected}
+								setSelected={setSelected}
+								setTareasEnOrden={setTareasEnOrden}
+								auxTareas={auxTareas}
+								
+								setTipoFiltro={setTipoFiltro}
+							/>
+						)}
+						{/* ------- Modal de Acepta marcar como Tarea Realizada ------- */}
+						<ModalMarcarHecho
+							openModalHecho={openModalHecho}
+							setOpenModalHecho={setOpenModalHecho}
+							selected={selected}
+							setSelected={setSelected}
+							setTareasEnOrden={setTareasEnOrden}
+							auxTareas={auxTareas}
+							
+							setTipoFiltro={setTipoFiltro}
+						/>
+
+						{/*  -------  Modal No se puede Editar Tarea  -------*/}
+						<ModalNoEditar
+							openNoEditar={openNoEditar}
+							setOpenNoEditar={setOpenNoEditar}
 						/>
 					</Box>
 				</LocalizationProvider>

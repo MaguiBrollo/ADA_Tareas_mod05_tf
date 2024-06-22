@@ -27,11 +27,7 @@ import { RiTaskLine } from "react-icons/ri";
 import { BiSolidEdit } from "react-icons/bi";
 import { MdOutlineAddBox } from "react-icons/md";
 
-import { TareaNueva } from "./TareaNueva";
-import { ModalMarcarHecho } from "./ModalMarcarHecho";
-import { TareaBorrar } from "./TareaBorrar";
-import { TareaEditar } from "./TareaEditar";
-import { ModalNoEditar } from "./ModalNoEditar";
+import { getTareas } from "../utils/LocalStorage";
 
 import dayjs from "dayjs";
 
@@ -160,17 +156,19 @@ EnhancedTableHead.propTypes = {
 
 //----------------------------------------------------
 function EnhancedTableToolbar({
+	selected,
 	numSelected,
+	tareasEnOrden,
+	setAuxTareas,
+	setOpenTareaNueva,
 	setOpenModalHecho,
 	setOpenModalBorrar,
 	setOpenTareaEditar,
-	tareasEnOrden,
-	selected,
 	setOpenNoEditar,
-	setOpen,
 }) {
 	const nuevaTarea = () => {
-		setOpen(true);
+		setAuxTareas(getTareas());
+		setOpenTareaNueva(true);
 	};
 
 	const editarTareaSeleccionada = () => {
@@ -178,15 +176,18 @@ function EnhancedTableToolbar({
 		if (tareaParaEditar.estado) {
 			setOpenNoEditar(true); //No se edita si está Realizada
 		} else {
+			setAuxTareas(getTareas());
 			setOpenTareaEditar(true);
 		}
 	};
 
 	const marcarComoHecho = () => {
+		setAuxTareas(getTareas());
 		setOpenModalHecho(true);
 	};
 
 	const marcarBorrar = () => {
+		setAuxTareas(getTareas());
 		setOpenModalBorrar(true);
 	};
 
@@ -287,25 +288,21 @@ function EnhancedTableToolbar({
 /*  ============================================  */
 /*  ============================================  */
 export const TareasListar = ({
+	selected,
+	setSelected,
 	tareasEnOrden,
-	setTareasEnOrden,
-	tipoFiltro,
-	setTipoFiltro,
+	setAuxTareas,
+	setOpenTareaNueva,
+	setOpenModalHecho,
+	setOpenModalBorrar,
+	setOpenTareaEditar,
+	setOpenNoEditar,
 }) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 	const [page, setPage] = React.useState(0);
-
-	const [selected, setSelected] = React.useState([]);
-
 	const [dense, setDense] = React.useState(false);
-
-	const [open, setOpen] = React.useState(false); //nueva tarea
-	const [openModalHecho, setOpenModalHecho] = React.useState(false);
-	const [openModalBorrar, setOpenModalBorrar] = React.useState(false);
-	const [openTareaEditar, setOpenTareaEditar] = React.useState(false);
-	const [openNoEditar, setOpenNoEditar] = React.useState(false);
 
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
@@ -372,39 +369,20 @@ export const TareasListar = ({
 		[order, orderBy, page, rowsPerPage, tareasEnOrden]
 	);
 
-	React.useEffect(() => {
-		//const pages = ["TODAS", "REALIZADAS", "NO REALIZADAS"]; (MenuBar.jsx)
-		let nuevoTareasFiltrado = [];
-		if (tipoFiltro === "REALIZADAS") {
-			nuevoTareasFiltrado = tareasEnOrden.filter((t) => {
-				return t.estado;
-			});
-		} else {
-			if (tipoFiltro === "NO REALIZADAS") {
-				nuevoTareasFiltrado = tareasEnOrden.filter((t) => {
-					return !t.estado;
-				});
-			} else {
-				nuevoTareasFiltrado = [...tareasEnOrden];
-			}
-		}
-
-		setTareasEnOrden(nuevoTareasFiltrado);
-	}, [tipoFiltro]);
-
 	/* ---------------------------------------------- */
 	return (
 		<Box sx={{ width: "95%", maxWidth: "900px" }}>
 			<Paper sx={{ width: "100%", mb: 2 }}>
 				<EnhancedTableToolbar
+					selected={selected}
 					numSelected={selected.length}
+					tareasEnOrden={tareasEnOrden}
+					setAuxTareas={setAuxTareas}
+					setOpenTareaNueva={setOpenTareaNueva}
 					setOpenModalHecho={setOpenModalHecho}
 					setOpenModalBorrar={setOpenModalBorrar}
 					setOpenTareaEditar={setOpenTareaEditar}
-					tareasEnOrden={tareasEnOrden}
-					selected={selected}
 					setOpenNoEditar={setOpenNoEditar}
-					setOpen={setOpen}
 				/>
 				<TableContainer>
 					<Table
@@ -492,52 +470,6 @@ export const TareasListar = ({
 					/>
 				}
 				label="Expandir"
-			/>
-			<TareaNueva
-				open={open}
-				setOpen={setOpen}
-				tareasEnOrden={tareasEnOrden}
-				setTareasEnOrden={setTareasEnOrden}
-				setTipoFiltro={setTipoFiltro}
-			/>
-			{/* ------- Modal de Acepta marcar como Tarea Realizada ------- */}
-			<ModalMarcarHecho
-				openModalHecho={openModalHecho}
-				setOpenModalHecho={setOpenModalHecho}
-				selected={selected}
-				setSelected={setSelected}
-				tareasEnOrden={tareasEnOrden}
-				setTareasEnOrden={setTareasEnOrden}
-				setTipoFiltro={setTipoFiltro}
-			/>
-			{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
-			<TareaBorrar
-				openModalBorrar={openModalBorrar}
-				setOpenModalBorrar={setOpenModalBorrar}
-				selected={selected}
-				setSelected={setSelected}
-				tareasEnOrden={tareasEnOrden}
-				setTareasEnOrden={setTareasEnOrden}
-				setTipoFiltro={setTipoFiltro}
-			/>
-
-			{/* ------- Editar Tarea  -------*/}
-			{selected.length > 0 && (
-				<TareaEditar
-					openTareaEditar={openTareaEditar}
-					setOpenTareaEditar={setOpenTareaEditar}
-					selected={selected}
-					setSelected={setSelected}
-					tareasEnOrden={tareasEnOrden}
-					setTareasEnOrden={setTareasEnOrden}
-					setTipoFiltro={setTipoFiltro}
-				/>
-			)}
-
-			{/*  -------  Modal No se puede Editar Tarea  -------*/}
-			<ModalNoEditar
-				openNoEditar={openNoEditar}
-				setOpenNoEditar={setOpenNoEditar}
 			/>
 		</Box>
 	);

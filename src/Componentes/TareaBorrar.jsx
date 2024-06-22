@@ -1,5 +1,4 @@
-import { useEffect, useState, forwardRef } from "react";
-
+import { forwardRef } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,7 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
-import { getTareas } from "../utils/LocalStorage";
 
 const TransitionBorrar = forwardRef(function Transition(props, ref2) {
 	return <Slide direction="up" ref={ref2} {...props} />;
@@ -22,31 +20,23 @@ export const TareaBorrar = ({
 	setOpenModalBorrar,
 	selected,
 	setSelected,
-	tareasEnOrden,
 	setTareasEnOrden,
+	auxTareas,
 	setTipoFiltro,
 }) => {
 	const handleCloseB = () => {
 		setOpenModalBorrar(false);
 	};
+	const handleCloseBorrar = () => {
+		//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
+		const nuevoArrayTareas = auxTareas.filter((t) => !selected.includes(t.id));
 
-	//---- Para guardar en el LS y actualizar el array de la tabla
-	const [borrar, setBorrar] = useState(false);
-	useEffect(() => {
-		const nuevoTareasEnOrden = tareasEnOrden.filter(
-			(t) => !selected.includes(t.id)
-		);
-
-		setTareas(nuevoTareasEnOrden); //LocalStorage
-		setTareasEnOrden(nuevoTareasEnOrden); //Listar
+		setTareas(nuevoArrayTareas); //LocalStorage
+		setTareasEnOrden(nuevoArrayTareas); //Listar
 		setOpenModalBorrar(false);
 		setSelected([]);
-	}, [borrar]);
 
-	const handleCloseBorrar = () => {
-		setTareasEnOrden(getTareas()); //por si está filtrado
-		setTipoFiltro("TODAS");
-		setBorrar(true);
+		setTipoFiltro("TODAS"); //solo para mostrar el texto
 	};
 
 	return (
