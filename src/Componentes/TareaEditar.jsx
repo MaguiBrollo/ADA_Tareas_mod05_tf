@@ -26,6 +26,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { categorias } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 //------------------------------------
 const sinAcentosMayus = (texto) => {
@@ -59,16 +60,13 @@ export const TareaEditar = ({
 	setSelected,
 	tareasEnOrden,
 	setTareasEnOrden,
+	setTipoFiltro,
 }) => {
 	const [errorTarea, setErrorTarea] = useState(false);
 	const [errorCategoria, setErrorCategoria] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const hoy = dayjs();
-	// const index = tareasEnOrden.findIndex((t) => t.id === selected[0]);
-
 	const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
-
 	const [datosForm, setDatosForm] = useState({
 		id: tareaParaEditar.id,
 		tarea: tareaParaEditar.tarea,
@@ -112,24 +110,24 @@ export const TareaEditar = ({
 				setErrorCategoria(false);
 
 				//------ guardar EDITAR ------------------
-				const nuevoTareasEnOrden = [];
-				tareasEnOrden.forEach((t) => {
+				setTareasEnOrden(getTareas()); //por si está filtrado
+				const nuevoTareasEnOrden = tareasEnOrden.map((t) => {
 					if (t.id === selected[0]) {
-						nuevoTareasEnOrden.push({
+						return {
 							id: id,
 							tarea: tarea,
 							categoria: categoria,
 							fecha: dayjs(fecha).format("YYYY/MM/DD"),
 							estado: estado,
-						});
+						};
 					} else {
-						nuevoTareasEnOrden.push({
+						return {
 							id: t.id,
 							tarea: t.tarea,
 							categoria: t.categoria,
 							fecha: t.fecha,
 							estado: t.estado,
-						});
+						};
 					}
 				});
 
@@ -139,6 +137,7 @@ export const TareaEditar = ({
 				setTimeout(() => {
 					setTareasEnOrden(nuevoTareasEnOrden); //Listar
 					setTareas(nuevoTareasEnOrden); //LocalStorage
+					setTipoFiltro("TODAS");
 					setLoading(false);
 					cerrarTareaEditar();
 				}, 2000);
@@ -255,7 +254,7 @@ export const TareaEditar = ({
 								}}
 								label="Fecha para la tarea"
 								format="DD-MM-YYYY"
-								minDate={hoy}
+								minDate={dayjs()}
 								required
 								closeOnSelect
 								slotProps={{

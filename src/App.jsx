@@ -14,7 +14,6 @@ import { TareasListar } from "./Componentes/TareasListar";
 import { tareasArray } from "./utils/Datos";
 import { setTareas } from "./utils/LocalStorage";
 import { getTareas } from "./utils/LocalStorage";
-/* import { TareaNueva } from "./Componentes/TareaNueva"; */
 
 import "./App.css";
 
@@ -22,10 +21,10 @@ const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 /*  ============================================  */
 function App() {
-	/* const [open, setOpen] = React.useState(false); */
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
+	const [tipoFiltro, setTipoFiltro] = React.useState("todas");
 
 	const [mode, setMode] = React.useState(
 		localStorage.getItem("modoClaroOscuro") || "light"
@@ -120,8 +119,11 @@ function App() {
 						}}
 					>
 						{/*  ----  NavBar  -------*/}
-						{/* <MenuBar ColorModeContext={ColorModeContext} setOpen={setOpen} /> */}
-						<MenuBar ColorModeContext={ColorModeContext} />
+						<MenuBar
+							ColorModeContext={ColorModeContext}
+							setTipoFiltro={setTipoFiltro}
+							setTareasEnOrden={setTareasEnOrden}
+						/>
 						{/*  ----  Título  -------*/}
 						<Typography
 							sx={{
@@ -129,23 +131,18 @@ function App() {
 								display: "flex",
 								alignItems: "center",
 								margin: "10px",
-								fontSize: "1.8rem",
+								fontSize: "1.5rem",
 							}}
 						>
-							Administrador de Tareas
+							Tareas: {tipoFiltro.toUpperCase()}
 						</Typography>
 						{/*  ----  TAREAS LISTAR TODAS  -------*/}
 						<TareasListar
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
+							tipoFiltro={tipoFiltro}
+							setTipoFiltro={setTipoFiltro}
 						/>
-						{/*  ----  Nueva Tarea  -------*/}
-						{/* <TareaNueva
-							open={open}
-							setOpen={setOpen}
-							tareasEnOrden={tareasEnOrden}
-							setTareasEnOrden={setTareasEnOrden}
-						/> */}
 					</Box>
 				</LocalizationProvider>
 			</ThemeProvider>

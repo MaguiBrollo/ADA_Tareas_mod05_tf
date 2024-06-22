@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState, forwardRef } from "react";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -9,37 +9,48 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
-const TransitionBorrar = React.forwardRef(function Transition(props, ref2) {
+const TransitionBorrar = forwardRef(function Transition(props, ref2) {
 	return <Slide direction="up" ref={ref2} {...props} />;
 });
 
 //================================
 
-export const ModalBorrarTareas = ({
+export const TareaBorrar = ({
 	openModalBorrar,
 	setOpenModalBorrar,
 	selected,
 	setSelected,
 	tareasEnOrden,
 	setTareasEnOrden,
+	setTipoFiltro,
 }) => {
 	const handleCloseB = () => {
 		setOpenModalBorrar(false);
 	};
 
-	const handleCloseBorrar = () => {
+	//---- Para guardar en el LS y actualizar el array de la tabla
+	const [borrar, setBorrar] = useState(false);
+	useEffect(() => {
 		const nuevoTareasEnOrden = tareasEnOrden.filter(
 			(t) => !selected.includes(t.id)
 		);
-		setOpenModalBorrar(false);
-		setSelected([]);
+
 		setTareas(nuevoTareasEnOrden); //LocalStorage
 		setTareasEnOrden(nuevoTareasEnOrden); //Listar
+		setOpenModalBorrar(false);
+		setSelected([]);
+	}, [borrar]);
+
+	const handleCloseBorrar = () => {
+		setTareasEnOrden(getTareas()); //por si está filtrado
+		setTipoFiltro("TODAS");
+		setBorrar(true);
 	};
 
 	return (
-		<React.Fragment>
+		<>
 			<Dialog
 				open={openModalBorrar}
 				TransitionComponent={TransitionBorrar}
@@ -57,6 +68,6 @@ export const ModalBorrarTareas = ({
 					<Button onClick={handleCloseBorrar}>Borrar</Button>
 				</DialogActions>
 			</Dialog>
-		</React.Fragment>
+		</>
 	);
 };

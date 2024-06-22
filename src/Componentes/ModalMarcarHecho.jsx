@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -22,37 +23,37 @@ export const ModalMarcarHecho = ({
 	setSelected,
 	tareasEnOrden,
 	setTareasEnOrden,
+	setTipoFiltro,
 }) => {
 	const handleClose = () => {
 		setOpenModalHecho(false);
 	};
 
 	const handleCloseMarcar = () => {
-		const nuevoTareasEnOrden = [];
-
-		tareasEnOrden.forEach((t) => {
+		setTareasEnOrden(getTareas()); //por si está filtrado
+		const nuevoTareasEnOrden = tareasEnOrden.map((t) => {
 			if (selected.some((s) => s === t.id)) {
-				nuevoTareasEnOrden.push({
+				return {
 					id: t.id,
 					tarea: t.tarea,
 					categoria: t.categoria,
 					fecha: t.fecha,
 					estado: !t.estado,
-				});
+				};
 			} else {
-				nuevoTareasEnOrden.push({
+				return {
 					id: t.id,
 					tarea: t.tarea,
 					categoria: t.categoria,
 					fecha: t.fecha,
 					estado: t.estado,
-				});
+				};
 			}
 		});
 
 		setTareasEnOrden(nuevoTareasEnOrden); //Listar
 		setTareas(nuevoTareasEnOrden); //LocalStorage
-
+		setTipoFiltro("TODAS");
 		setOpenModalHecho(false);
 		setSelected([]);
 	};
