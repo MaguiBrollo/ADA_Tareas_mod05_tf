@@ -52,23 +52,26 @@ function getComparator(order, orderBy) {
 //----------------------------------------------------
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
+
 	stabilizedThis.sort((a, b) => {
 		const order = comparator(a[0], b[0]);
+
 		if (order !== 0) {
 			return order;
 		}
 		return a[1] - b[1];
 	});
+
 	return stabilizedThis.map((el) => el[0]);
 }
 
 //----------------------------------------------------
 const headCells = [
-	{
-		id: "tareas",
+	{ //los "id", tienen que ser igual a cada campo de Array de Tarea
+		id: "tarea", 
 		numeric: false,
 		disablePadding: true,
-		label: "TAREAS",
+		label: "TAREA",
 	},
 	{
 		id: "categoria",
@@ -174,7 +177,7 @@ function EnhancedTableToolbar({
 	const editarTareaSeleccionada = () => {
 		const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
 		if (tareaParaEditar.estado) {
-			setOpenNoEditar(true); //No se edita si está Realizada
+			setOpenNoEditar(true); //No se edita si está Marcada Realizada
 		} else {
 			setAuxTareas(getTareas());
 			setOpenTareaEditar(true);

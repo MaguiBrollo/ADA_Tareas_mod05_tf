@@ -13,7 +13,7 @@ import {
 	InputLabel,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { IoMoveSharp } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -74,6 +74,16 @@ export const TareaNueva = ({
 	});
 	const { tarea, categoria, fecha } = datosForm;
 
+	useEffect(() => {
+		if (tarea.length < 5 || tarea.length > 65) {
+			setErrorTarea(true);
+		} else {
+			setErrorTarea(false);
+		}
+
+		categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
+	}, [datosForm]);
+
 	const guardarDatos = (e) => {
 		if (e.target.name === "tarea") {
 			setDatosForm({
@@ -84,7 +94,7 @@ export const TareaNueva = ({
 			setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
 		}
 
-		if (e.target.name === "tarea") {
+		/* if (e.target.name === "tarea") {
 			if (tarea.length < 5 || tarea.length > 65) {
 				setErrorTarea(true);
 			} else {
@@ -93,7 +103,7 @@ export const TareaNueva = ({
 		}
 		if (e.target.name === "categoria") {
 			categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
-		}
+		} */
 	};
 
 	//---- Para guardar en el LS y actualizar el array de la tabla

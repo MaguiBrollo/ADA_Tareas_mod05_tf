@@ -88,6 +88,17 @@ export const TareaEditar = ({
 	}, [selected, auxTareas]);
 
 	let { id, tarea, categoria, fecha, estado } = datosForm;
+	
+	useEffect(() => {
+		if (tarea.length < 5 || tarea.length > 65) {
+			setErrorTarea(true);
+		} else {
+			setErrorTarea(false);
+		}
+
+		categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
+	}, [datosForm]);
+
 	const guardarDatos = (e) => {
 		if (e.target.name === "tarea") {
 			setDatosForm({
@@ -98,7 +109,7 @@ export const TareaEditar = ({
 			setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
 		}
 
-		if (e.target.name === "tarea") {
+		/* if (e.target.name === "tarea") {
 			if (tarea.length < 5 || tarea.length > 60) {
 				setErrorTarea(true);
 			} else {
@@ -107,7 +118,7 @@ export const TareaEditar = ({
 		}
 		if (e.target.name === "categoria") {
 			categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
-		}
+		} */
 	};
 
 	const handleSubmitEdit = (tarea, categoria, fecha) => {
