@@ -2,7 +2,7 @@
 import * as React from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
+import { grey, deepPurple } from "@mui/material/colors";
 import { Box, Typography } from "@mui/material";
 
 //Fechas
@@ -109,23 +109,23 @@ function App() {
 								// Valores para MODO light
 
 								primary: {
-									main: "#2A2239",
+									main: deepPurple[200], //calendario: botones inferior
 								},
 								secondary: {
-									main: "#6355E6",
+									main: deepPurple[500],
 								},
 
 								background: {
-									default: "#8E8EFF",
-									paper: "#262654",
-									table: "#6355E6",
-									tableRows: "#6355E6",
+									default: deepPurple[50],
+									paper: deepPurple[800], //calendario: fondo,
 									tableHead: "#5034c9",
+									tableRows: "#6355E6",
+									
 								},
 								text: {
-									primary: "#FFFFFF", //blanco
+									primary: "#FFFFFF", //calendario: título, nro, días
 									secondary: grey[200],
-									iconos: grey[800],
+									iconos: grey[600],
 								},
 								button: {
 									textHover: grey[200],
@@ -161,7 +161,7 @@ function App() {
 						{/*  ----  Título  -------*/}
 						<Typography
 							sx={{
-								color: "text.primary",
+								color: "text.iconos",
 								display: "flex",
 								alignItems: "center",
 								margin: "10px",

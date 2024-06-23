@@ -54,8 +54,32 @@ export const TareaBorrar = ({
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseB}>Cancelar</Button>
-					<Button onClick={handleCloseBorrar}>Borrar</Button>
+					<Button
+						onClick={handleCloseB}
+						sx={{
+							margin: "2px",
+							":hover": {
+								color: "button.textHover",
+								backgroundColor: "button.hover",
+								borderRadius: "5px",
+							},
+						}}
+					>
+						Cancelar
+					</Button>
+					<Button
+						onClick={handleCloseBorrar}
+						sx={{
+							margin: "2px",
+							":hover": {
+								color: "button.textHover",
+								backgroundColor: "button.hover",
+								borderRadius: "5px",
+							},
+						}}
+					>
+						Borrar
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</>

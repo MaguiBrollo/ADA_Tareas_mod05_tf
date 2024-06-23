@@ -24,14 +24,26 @@ export const ModalNoEditar = ({ openNoEditar, setOpenNoEditar }) => {
 				keepMounted
 				aria-describedby="alert-dialog-slide-description"
 			>
-				<DialogTitle>{"Editar Tarea Cancelada"}</DialogTitle>
+				<DialogTitle>{"Editar Tarea"}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
-						Las tareas marcadas como Realizadas, no se pueden editar.
+						Las tareas marcadas como Realizadas no se pueden editar.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseNoEditar}>Aceptar</Button>
+					<Button
+						onClick={handleCloseNoEditar}
+						sx={{
+							margin: "2px",
+							":hover": {
+								color: "button.textHover",
+								backgroundColor: "button.hover",
+								borderRadius: "5px",
+							},
+						}}
+					>
+						Aceptar
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</React.Fragment>

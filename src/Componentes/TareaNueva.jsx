@@ -166,7 +166,7 @@ export const TareaNueva = ({
 					</Box>
 				</DialogTitle>
 
-				<Box sx={{ bgcolor: "background.default" }}>
+				<Box sx={{ bgcolor: "background.tableRows" }}>
 					<Typography
 						sx={{
 							display: "flex",
@@ -260,9 +260,11 @@ export const TareaNueva = ({
 							sx={{
 								color: "text.primary",
 								bgcolor: "background.paper",
+								margin: "2px",
 								":hover": {
-									color: "text.secondary",
-									bgcolor: "background.tableRows",
+									color: "button.textHover",
+									backgroundColor: "button.hover",
+									borderRadius: "5px",
 								},
 							}}
 						>
@@ -278,9 +280,11 @@ export const TareaNueva = ({
 							sx={{
 								color: "text.primary",
 								bgcolor: "background.paper",
+								margin: "2px",
 								":hover": {
-									color: "text.secondary",
-									bgcolor: "background.tableRows",
+									color: "button.textHover",
+									backgroundColor: "button.hover",
+									borderRadius: "5px",
 								},
 							}}
 						>

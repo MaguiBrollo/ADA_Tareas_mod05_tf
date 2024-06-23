@@ -24,7 +24,11 @@ import { getTareas } from "../utils/LocalStorage";
 const pages = ["TODAS", "REALIZADAS", "NO REALIZADAS"];
 
 /*  ============================================  */
-export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) => {
+export const MenuBar = ({
+	ColorModeContext,
+	setTipoFiltro,
+	setTareasEnOrden,
+}) => {
 	//, setOpen
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -35,7 +39,7 @@ export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) =
 	const handleCloseNavMenu = (e) => {
 		setAnchorElNav(null);
 		setTareasEnOrden(getTareas());
-		setTipoFiltro(e.target.id);
+		setTipoFiltro(e.target.innerText.trim());
 	};
 
 	/* ------------------------------------ */
@@ -109,6 +113,7 @@ export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) =
 								display: { xs: "none", md: "flex" },
 								alignItems: "center",
 								paddingRight: "5px",
+								color: "text.primary",
 							}}
 						>
 							Filtrar Tareas:
@@ -117,7 +122,6 @@ export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) =
 						{pages.map((page) => (
 							<Button
 								key={page}
-								id={page}
 								onClick={handleCloseNavMenu}
 								sx={{
 									margin: "2px",
@@ -126,7 +130,7 @@ export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) =
 									":hover": {
 										color: "button.textHover",
 										backgroundColor: "button.hover",
-										borderRadius: "10px",
+										borderRadius: "5px",
 									},
 								}}
 							>
@@ -171,7 +175,7 @@ export const MenuBar = ({ ColorModeContext, setTipoFiltro, setTareasEnOrden }) =
 								horizontal: "left",
 							}}
 							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
+							onClick={handleCloseNavMenu}
 							sx={{
 								display: { xs: "block", md: "none" },
 							}}

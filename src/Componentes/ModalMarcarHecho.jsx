@@ -75,8 +75,32 @@ export const ModalMarcarHecho = ({
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose}>Cancelar</Button>
-					<Button onClick={handleCloseMarcar}>Marcar</Button>
+					<Button
+						onClick={handleClose}
+						sx={{
+							margin: "2px",
+							":hover": {
+								color: "button.textHover",
+								backgroundColor: "button.hover",
+								borderRadius: "5px",
+							},
+						}}
+					>
+						Cancelar
+					</Button>
+					<Button
+						onClick={handleCloseMarcar}
+						sx={{
+							margin: "2px",
+							":hover": {
+								color: "button.textHover",
+								backgroundColor: "button.hover",
+								borderRadius: "5px",
+							},
+						}}
+					>
+						Marcar
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</React.Fragment>
