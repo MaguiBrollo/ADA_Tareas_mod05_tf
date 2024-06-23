@@ -104,6 +104,9 @@ function App() {
 									textHover: grey[200],
 									hover: grey[900],
 								},
+								error: {
+									main: "#FFEB3B", //amarillo
+								},
 						  }
 						: {
 								// Valores para MODO light
@@ -120,7 +123,6 @@ function App() {
 									paper: deepPurple[800], //calendario: fondo,
 									tableHead: "#5034c9",
 									tableRows: "#6355E6",
-									
 								},
 								text: {
 									primary: "#FFFFFF", //calendario: título, nro, días
@@ -130,6 +132,9 @@ function App() {
 								button: {
 									textHover: grey[200],
 									hover: "#2A2239",
+								},
+								error: {
+									main: "#FFEB3B", //amarillo
 								},
 						  }),
 				},
@@ -190,7 +195,6 @@ function App() {
 							setOpenTareaNueva={setOpenTareaNueva}
 							setTareasEnOrden={setTareasEnOrden}
 							auxTareas={auxTareas}
-							
 							setTipoFiltro={setTipoFiltro}
 						/>
 						{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
@@ -201,7 +205,6 @@ function App() {
 							setSelected={setSelected}
 							setTareasEnOrden={setTareasEnOrden}
 							auxTareas={auxTareas}
-							
 							setTipoFiltro={setTipoFiltro}
 						/>
 						{/* ------- Editar Tarea  -------*/}
@@ -213,7 +216,6 @@ function App() {
 								setSelected={setSelected}
 								setTareasEnOrden={setTareasEnOrden}
 								auxTareas={auxTareas}
-								
 								setTipoFiltro={setTipoFiltro}
 							/>
 						)}
@@ -225,7 +227,6 @@ function App() {
 							setSelected={setSelected}
 							setTareasEnOrden={setTareasEnOrden}
 							auxTareas={auxTareas}
-							
 							setTipoFiltro={setTipoFiltro}
 						/>
 

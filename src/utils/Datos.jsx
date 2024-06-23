@@ -19,36 +19,6 @@ export const tareasArray = [
 		dayjs().format("YYYY/MM/DD"),
 		false
 	),
-	crearTarea(
-		"DESCRIPCIÓN DE LA TAREA 222",
-		"VARIOS",
-		dayjs().format("YYYY/MM/DD"),
-		true
-	),
-	crearTarea(
-		"DESCRIPCIÓN DE LA TAREA 3333",
-		"VARIOS",
-		dayjs().format("YYYY/MM/DD"),
-		false
-	),
-	crearTarea(
-		"DESCRIPCIÓN DE LA TAREA 444 ",
-		"VARIOS",
-		dayjs().format("YYYY/MM/DD"),
-		true
-	),
-	crearTarea(
-		"DESCRIPCIÓN DE LA TAREA 555",
-		"VARIOS",
-		dayjs().format("YYYY/MM/DD"),
-		false
-	),
-	crearTarea(
-		"DESCRIPCIÓN DE LA TAREA 666 ",
-		"VARIOS",
-		dayjs().format("YYYY/MM/DD"),
-		true
-	),
 ];
 
 export const categorias = [
