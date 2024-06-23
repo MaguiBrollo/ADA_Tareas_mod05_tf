@@ -1,22 +1,35 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+
+import {
+	AppBar,
+	Box,
+	Container,
+	Menu,
+	Toolbar,
+	IconButton,
+	Typography,
+	Tooltip,
+	Button,
+	CardMedia,
+	MenuItem,
+} from "@mui/material";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import Container from "@mui/material/Container";
-import { Button, CardMedia, MenuItem } from "@mui/material";
 
 import ImgLogo from "../assets/LogoTarea.png";
 import { Modo } from "./Modo";
+import { getTareas } from "../utils/LocalStorage";
 
-const pages = ["Nueva Tarea", "Buscar", "Filtrar"];
+//Si se cambia aquí, cambiar en TareasListar.jsx
+const pages = ["TODAS", "REALIZADAS", "NO REALIZADAS"];
 
 /*  ============================================  */
-export const MenuBar = ({ ColorModeContext, setOpen }) => {
+export const MenuBar = ({
+	ColorModeContext,
+	setTipoFiltro,
+	setTareasEnOrden,
+}) => {
+	//, setOpen
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 
 	const handleOpenNavMenu = (event) => {
@@ -25,9 +38,8 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 
 	const handleCloseNavMenu = (e) => {
 		setAnchorElNav(null);
-		if (e.target.textContent.trim() === "Nueva Tarea") {
-			setOpen(true);
-		}
+		setTareasEnOrden(getTareas());
+		setTipoFiltro(e.target.innerText.trim());
 	};
 
 	/* ------------------------------------ */
@@ -96,6 +108,17 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 							justifyContent: "flex-end",
 						}}
 					>
+						<Typography
+							sx={{
+								display: { xs: "none", md: "flex" },
+								alignItems: "center",
+								paddingRight: "5px",
+								color: "text.primary",
+							}}
+						>
+							Filtrar Tareas:
+						</Typography>
+
 						{pages.map((page) => (
 							<Button
 								key={page}
@@ -107,7 +130,7 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 									":hover": {
 										color: "button.textHover",
 										backgroundColor: "button.hover",
-										borderRadius: "10px",
+										borderRadius: "5px",
 									},
 								}}
 							>
@@ -123,18 +146,20 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 							justifyContent: "flex-end",
 						}}
 					>
-						<IconButton
-							sx={{
-								color: "text.primary",
-								size: "large",
-							}}
-							aria-label="Menu de la Aplicación"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={handleOpenNavMenu}
-						>
-							<GiHamburgerMenu />
-						</IconButton>
+						<Tooltip title="Filtrar Tareas">
+							<IconButton
+								sx={{
+									color: "text.primary",
+									size: "large",
+								}}
+								aria-label="Menu de la Aplicación"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleOpenNavMenu}
+							>
+								<GiHamburgerMenu />
+							</IconButton>
+						</Tooltip>
 
 						{/* Menú Vertical desplegable */}
 						<Menu
@@ -150,7 +175,7 @@ export const MenuBar = ({ ColorModeContext, setOpen }) => {
 								horizontal: "left",
 							}}
 							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
+							onClick={handleCloseNavMenu}
 							sx={{
 								display: { xs: "block", md: "none" },
 							}}

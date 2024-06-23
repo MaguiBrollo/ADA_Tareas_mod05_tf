@@ -1,5 +1,4 @@
-import React from "react";
-
+import { forwardRef } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,73 +9,53 @@ import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
+const TransitionBorrar = forwardRef(function Transition(props, ref2) {
+	return <Slide direction="up" ref={ref2} {...props} />;
 });
 
 //================================
-export const ModalMarcarHecho = ({
-	openModalHecho,
-	setOpenModalHecho,
+
+export const TareaBorrar = ({
+	openModalBorrar,
+	setOpenModalBorrar,
 	selected,
 	setSelected,
 	setTareasEnOrden,
 	auxTareas,
-
 	setTipoFiltro,
 }) => {
-	const handleClose = () => {
-		setOpenModalHecho(false);
+	const handleCloseB = () => {
+		setOpenModalBorrar(false);
 	};
-
-	const handleCloseMarcar = () => {
+	const handleCloseBorrar = () => {
 		//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-		const nuevoTareasEnOrden = auxTareas.map((t) => {
-			if (selected.some((s) => s === t.id)) {
-				return {
-					id: t.id,
-					tarea: t.tarea,
-					categoria: t.categoria,
-					fecha: t.fecha,
-					estado: !t.estado,
-				};
-			} else {
-				return {
-					id: t.id,
-					tarea: t.tarea,
-					categoria: t.categoria,
-					fecha: t.fecha,
-					estado: t.estado,
-				};
-			}
-		});
+		const nuevoArrayTareas = auxTareas.filter((t) => !selected.includes(t.id));
 
-		setTareasEnOrden(nuevoTareasEnOrden); //Listar
-		setTareas(nuevoTareasEnOrden); //LocalStorage
-		setTipoFiltro("TODAS");
-		setOpenModalHecho(false);
+		setTareas(nuevoArrayTareas); //LocalStorage
+		setTareasEnOrden(nuevoArrayTareas); //Listar
+		setOpenModalBorrar(false);
 		setSelected([]);
+
 		setTipoFiltro("TODAS"); //solo para mostrar el texto
 	};
 
 	return (
-		<React.Fragment>
+		<>
 			<Dialog
-				open={openModalHecho}
-				TransitionComponent={Transition}
+				open={openModalBorrar}
+				TransitionComponent={TransitionBorrar}
 				keepMounted
-				onClose={handleClose}
-				aria-describedby="alert-dialog-slide-description"
+				aria-describedby="alert-dialog-slide-description-b"
 			>
 				<DialogTitle>{"TAREAS SELECCIONADAS"}</DialogTitle>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-slide-description">
-						¿Desea MARCAR como Tarea Realizada a la/s tarea/s seleccionada/s?
+					<DialogContentText id="alert-dialog-slide-description-b">
+						¿Desea ELIMINAR DEFINITIVAMENTE la/s tarea/s seleccionada/s?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button
-						onClick={handleClose}
+						onClick={handleCloseB}
 						sx={{
 							margin: "2px",
 							":hover": {
@@ -89,7 +68,7 @@ export const ModalMarcarHecho = ({
 						Cancelar
 					</Button>
 					<Button
-						onClick={handleCloseMarcar}
+						onClick={handleCloseBorrar}
 						sx={{
 							margin: "2px",
 							":hover": {
@@ -99,10 +78,10 @@ export const ModalMarcarHecho = ({
 							},
 						}}
 					>
-						Marcar
+						Borrar
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</React.Fragment>
+		</>
 	);
 };

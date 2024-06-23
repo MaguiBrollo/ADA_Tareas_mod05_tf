@@ -22,11 +22,14 @@ import {
 } from "@mui/material";
 
 import { MdDelete } from "react-icons/md";
-import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoQuestion } from "react-icons/go";
-import { MdOutlineEdit } from "react-icons/md";
+import { RiTaskLine } from "react-icons/ri";
+import { BiSolidEdit } from "react-icons/bi";
+import { MdOutlineAddBox } from "react-icons/md";
 
-import { ModalMarcarHecho } from "./ModalMarcarHecho";
+import { getTareas } from "../utils/LocalStorage";
+
+import dayjs from "dayjs";
 
 //----------------------------------------------------
 function descendingComparator(a, b, orderBy) {
@@ -49,23 +52,26 @@ function getComparator(order, orderBy) {
 //----------------------------------------------------
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
+
 	stabilizedThis.sort((a, b) => {
 		const order = comparator(a[0], b[0]);
+
 		if (order !== 0) {
 			return order;
 		}
 		return a[1] - b[1];
 	});
+
 	return stabilizedThis.map((el) => el[0]);
 }
 
 //----------------------------------------------------
 const headCells = [
-	{
-		id: "tareas",
+	{ //los "id", tienen que ser igual a cada campo de Array de Tarea
+		id: "tarea", 
 		numeric: false,
 		disablePadding: true,
-		label: "TAREAS",
+		label: "TAREA",
 	},
 	{
 		id: "categoria",
@@ -152,9 +158,40 @@ EnhancedTableHead.propTypes = {
 };
 
 //----------------------------------------------------
-function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
+function EnhancedTableToolbar({
+	selected,
+	numSelected,
+	tareasEnOrden,
+	setAuxTareas,
+	setOpenTareaNueva,
+	setOpenModalHecho,
+	setOpenModalBorrar,
+	setOpenTareaEditar,
+	setOpenNoEditar,
+}) {
+	const nuevaTarea = () => {
+		setAuxTareas(getTareas());
+		setOpenTareaNueva(true);
+	};
+
+	const editarTareaSeleccionada = () => {
+		const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
+		if (tareaParaEditar.estado) {
+			setOpenNoEditar(true); //No se edita si está Marcada Realizada
+		} else {
+			setAuxTareas(getTareas());
+			setOpenTareaEditar(true);
+		}
+	};
+
 	const marcarComoHecho = () => {
+		setAuxTareas(getTareas());
 		setOpenModalHecho(true);
+	};
+
+	const marcarBorrar = () => {
+		setAuxTareas(getTareas());
+		setOpenModalBorrar(true);
 	};
 
 	return (
@@ -191,18 +228,26 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 				</Typography>
 			)}
 
+			<Tooltip title="Agregar una tareas">
+				<IconButton onClick={nuevaTarea} sx={{ color: "text.primary" }}>
+					<MdOutlineAddBox />
+				</IconButton>
+			</Tooltip>
 			{numSelected > 0 ? (
 				<>
 					{numSelected === 1 ? (
 						<Tooltip title="Editar una tarea">
-							<IconButton sx={{ color: "text.primary" }}>
-								<MdOutlineEdit />
+							<IconButton
+								onClick={editarTareaSeleccionada}
+								sx={{ color: "text.primary" }}
+							>
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					) : (
 						<Tooltip>
 							<IconButton sx={{ color: "text.iconos" }}>
-								<MdOutlineEdit />
+								<BiSolidEdit />
 							</IconButton>
 						</Tooltip>
 					)}
@@ -211,11 +256,11 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 							onClick={marcarComoHecho}
 							sx={{ color: "text.primary" }}
 						>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip title="Eliminar tarea/s seleccionada/s">
-						<IconButton sx={{ color: "text.primary" }}>
+						<IconButton onClick={marcarBorrar} sx={{ color: "text.primary" }}>
 							<MdDelete />
 						</IconButton>
 					</Tooltip>
@@ -224,12 +269,12 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 				<>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineEdit />
+							<BiSolidEdit />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
 						<IconButton sx={{ color: "text.iconos" }}>
-							<MdOutlineTaskAlt />
+							<RiTaskLine />
 						</IconButton>
 					</Tooltip>
 					<Tooltip>
@@ -243,24 +288,24 @@ function EnhancedTableToolbar({ numSelected, setOpenModalHecho }) {
 	);
 }
 
-EnhancedTableToolbar.propTypes = {
-	numSelected: PropTypes.number.isRequired,
-};
-
 /*  ============================================  */
 /*  ============================================  */
-export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
+export const TareasListar = ({
+	selected,
+	setSelected,
+	tareasEnOrden,
+	setAuxTareas,
+	setOpenTareaNueva,
+	setOpenModalHecho,
+	setOpenModalBorrar,
+	setOpenTareaEditar,
+	setOpenNoEditar,
+}) => {
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("estado");
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 	const [page, setPage] = React.useState(0);
-
-	const [selected, setSelected] = React.useState([]);
-
 	const [dense, setDense] = React.useState(false);
-
-	//---- Marcar como realizado
-	const [openModalHecho, setOpenModalHecho] = React.useState(false);
 
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
@@ -324,7 +369,7 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 				page * rowsPerPage,
 				page * rowsPerPage + rowsPerPage
 			),
-		[order, orderBy, page, rowsPerPage, actualizarListar]
+		[order, orderBy, page, rowsPerPage, tareasEnOrden]
 	);
 
 	/* ---------------------------------------------- */
@@ -332,8 +377,15 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 		<Box sx={{ width: "95%", maxWidth: "900px" }}>
 			<Paper sx={{ width: "100%", mb: 2 }}>
 				<EnhancedTableToolbar
+					selected={selected}
 					numSelected={selected.length}
+					tareasEnOrden={tareasEnOrden}
+					setAuxTareas={setAuxTareas}
+					setOpenTareaNueva={setOpenTareaNueva}
 					setOpenModalHecho={setOpenModalHecho}
+					setOpenModalBorrar={setOpenModalBorrar}
+					setOpenTareaEditar={setOpenTareaEditar}
+					setOpenNoEditar={setOpenNoEditar}
 				/>
 				<TableContainer>
 					<Table
@@ -377,10 +429,12 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 
 										<TableCell align="center">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
-										<TableCell align="center">{row.fecha}</TableCell>
+										<TableCell align="center">
+											{dayjs(row.fecha).format("DD/MM/YYYY")}
+										</TableCell>
 										<TableCell align="center">
 											{row.estado ? (
-												<MdOutlineTaskAlt color="black" />
+												<RiTaskLine color="black" />
 											) : (
 												<GoQuestion />
 											)}
@@ -419,15 +473,6 @@ export const TareasListar = ({ tareasEnOrden, actualizarListar }) => {
 					/>
 				}
 				label="Expandir"
-			/>
-
-			{/* Modal de Acepta marcar como Tarea Realizada*/}
-			<ModalMarcarHecho
-				setOpenModalHecho={setOpenModalHecho}
-				openModalHecho={openModalHecho}
-				selected={selected}
-				tareasEnOrden={tareasEnOrden}
-				setSelected={setSelected}
 			/>
 		</Box>
 	);
