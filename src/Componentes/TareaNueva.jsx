@@ -75,13 +75,14 @@ export const TareaNueva = ({
 	const { tarea, categoria, fecha } = datosForm;
 
 	useEffect(() => {
-		if (tarea.length < 5 || tarea.length > 65) {
-			setErrorTarea(true);
-		} else {
-			setErrorTarea(false);
+		if (tarea !== "") {
+			if (tarea.length < 5 || tarea.length > 65) {
+				setErrorTarea(true);
+			} else {
+				setErrorTarea(false);
+			}
+			categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
 		}
-
-		categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
 	}, [datosForm]);
 
 	const guardarDatos = (e) => {
@@ -108,33 +109,38 @@ export const TareaNueva = ({
 
 	//---- Para guardar en el LS y actualizar el array de la tabla
 	const handleSubmit = (tarea, categoria, fecha) => {
-		if (tarea.length < 5 || tarea.length > 65) {
-			setErrorTarea(true);
-		} else {
-			setErrorTarea(false);
-			if (categoria === "S") {
-				setErrorCategoria(true);
+		if (tarea !== "") {
+			if (tarea.length < 5 || tarea.length > 65) {
+				setErrorTarea(true);
 			} else {
-				setErrorCategoria(false);
+				setErrorTarea(false);
+				if (categoria === "S") {
+					setErrorCategoria(true);
+				} else {
+					setErrorCategoria(false);
 
-				//------ guardar ------------------
-				//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-				const nuevoArrayTareas = [...auxTareas];
-				const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
-				const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
+					//------ guardar ------------------
+					//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
+					const nuevoArrayTareas = [...auxTareas];
+					const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
+					const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
 
-				nuevoArrayTareas.push(nuevaTarea);
+					nuevoArrayTareas.push(nuevaTarea);
 
-				setLoading(true);
-				setTimeout(() => {
-					setTareasEnOrden(nuevoArrayTareas); //array para listar
-					setTareas(nuevoArrayTareas); //localstorage
+					setLoading(true);
+					setTimeout(() => {
+						setTareasEnOrden(nuevoArrayTareas); //array para listar
+						setTareas(nuevoArrayTareas); //localstorage
 
-					setLoading(false);
-					cerrarTareaNueva();
-					setTipoFiltro("TODAS"); //solo para mostrar el texto
-				}, 2000);
+						setLoading(false);
+						cerrarTareaNueva();
+						setTipoFiltro("TODAS"); //solo para mostrar el texto
+					}, 2000);
+				}
 			}
+		} else {
+			setErrorTarea(true);
+			setErrorCategoria(true);
 		}
 	};
 
@@ -199,23 +205,26 @@ export const TareaNueva = ({
 						noValidate
 						autoComplete="off"
 					>
-						<TextField
-							id="tarea-descripcion"
-							label="Descripción de la Tarea"
-							type="text"
-							name="tarea"
-							error={errorTarea}
-							value={tarea}
-							onChange={guardarDatos}
-							variant="outlined"
-							margin="dense"
-							helperText="Dato obligatorio (5-65 caracteres)"
-							required
-							inputProps={{
-								minLength: 5,
-								maxLength: 65,
-							}}
-						/>
+						<FormControl sx={{ width: "100%" }}>
+							<TextField
+								autoComplete="off"
+								id="tarea-descripcion"
+								label="Descripción de la Tarea"
+								type="text"
+								name="tarea"
+								error={errorTarea}
+								value={tarea}
+								onChange={guardarDatos}
+								variant="outlined"
+								margin="dense"
+								helperText="Dato obligatorio (5-65 caracteres)"
+								required
+								inputProps={{
+									minLength: 5,
+									maxLength: 65,
+								}}
+							/>
+						</FormControl>
 
 						<FormControl sx={{ width: "90%", marginLeft: "15px" }}>
 							<InputLabel id="tarea-categoria">
@@ -261,46 +270,46 @@ export const TareaNueva = ({
 								color="text.primary"
 							/>
 						</DemoItem>
-					</Box>
-					<DialogActions>
-						<Button
-							autoFocus
-							onClick={cerrarTareaNueva}
-							endIcon={<MdOutlineCancel />}
-							sx={{
-								color: "text.primary",
-								bgcolor: "background.paper",
-								margin: "2px",
-								":hover": {
-									color: "button.textHover",
-									backgroundColor: "button.hover",
-									borderRadius: "5px",
-								},
-							}}
-						>
-							Cancelar
-						</Button>
+						<DialogActions>
+							<Button
+								autoFocus
+								onClick={cerrarTareaNueva}
+								endIcon={<MdOutlineCancel />}
+								sx={{
+									color: "text.primary",
+									bgcolor: "background.paper",
+									margin: "2px",
+									":hover": {
+										color: "button.textHover",
+										backgroundColor: "button.hover",
+										borderRadius: "5px",
+									},
+								}}
+							>
+								Cancelar
+							</Button>
 
-						<LoadingButton
-							onClick={() => handleSubmit(tarea, categoria, fecha)}
-							loading={loading}
-							loadingPosition="end"
-							endIcon={<IoMdAddCircleOutline />}
-							variant="contained"
-							sx={{
-								color: "text.primary",
-								bgcolor: "background.paper",
-								margin: "2px",
-								":hover": {
-									color: "button.textHover",
-									backgroundColor: "button.hover",
-									borderRadius: "5px",
-								},
-							}}
-						>
-							<span>Guardar</span>
-						</LoadingButton>
-					</DialogActions>
+							<LoadingButton
+								onClick={() => handleSubmit(tarea, categoria, fecha)}
+								loading={loading}
+								loadingPosition="end"
+								endIcon={<IoMdAddCircleOutline />}
+								variant="contained"
+								sx={{
+									color: "text.primary",
+									bgcolor: "background.paper",
+									margin: "2px",
+									":hover": {
+										color: "button.textHover",
+										backgroundColor: "button.hover",
+										borderRadius: "5px",
+									},
+								}}
+							>
+								<span>Guardar</span>
+							</LoadingButton>
+						</DialogActions>
+					</Box>
 				</Box>
 			</Dialog>
 		</>

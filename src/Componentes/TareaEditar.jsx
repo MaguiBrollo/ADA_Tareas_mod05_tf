@@ -77,18 +77,20 @@ export const TareaEditar = ({
 	useEffect(() => {
 		if (selected.length > 0 && auxTareas.length > 0) {
 			const tareaParaEditar = auxTareas.find((t) => t.id === selected[0]);
-			setDatosForm({
-				id: tareaParaEditar.id,
-				tarea: tareaParaEditar.tarea,
-				categoria: tareaParaEditar.categoria,
-				fecha: dayjs(tareaParaEditar.fecha),
-				estado: tareaParaEditar.estado,
-			});
+			if (tareaParaEditar) {
+				setDatosForm({
+					id: tareaParaEditar.id,
+					tarea: tareaParaEditar.tarea,
+					categoria: tareaParaEditar.categoria,
+					fecha: dayjs(tareaParaEditar.fecha),
+					estado: tareaParaEditar.estado,
+				});
+			}
 		}
 	}, [selected, auxTareas]);
 
 	let { id, tarea, categoria, fecha, estado } = datosForm;
-	
+
 	useEffect(() => {
 		if (tarea.length < 5 || tarea.length > 65) {
 			setErrorTarea(true);
