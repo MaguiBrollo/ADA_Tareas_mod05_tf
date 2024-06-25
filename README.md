@@ -43,13 +43,13 @@
 > Las aplicaciones web, comúnmente conocidas como apps, se han convertido en una parte esencial de nuestra vida cotidiana. Las apps se han consolidado como nuestras aliadas, simplificándonos tareas diarias complejas, como otras no tan complejas como por ejemplo el registro de tareas pendientes de realización. <br> `tasks IN order` se consolida como una herramienta sencilla y sumemente útil, ideal para registrar de manera fácil, tareas con su respectiva fecha de pisible realización.
 
 <p align="center" >
-   <img src="imgReadme/a ppal.png" width="500px" alt-text="Presentación">
+   <img src="src/assets/img_readme/pant_ppal.png" width="400px" alt-text="Presentación">
 </p>
 
 La aplicación `tasks IN order`, fue diseñada de tal manera que puede ser utilizada en diferentes dispositivos, lo que implica un correcto diseño responsive.
 
 <p align="center" >
-   <img src="imgReadme/responsive.png" width="400px" alt-text="Responsive">
+   <img src="src/assets/img_readme/responsive.png" width="400px" alt-text="Responsive">
 </p>
 
 <br>
@@ -81,36 +81,36 @@ Teacher JOB es una app desarrollada como Trabajo Final del "Módulo 5 - React", 
 [:top:](#tabla-de-contenidos) <br>
 La pantalla principal de la aplicación presenta las siguientes opciones:
 
-- [Menú Filtros](#menú-filtros)
-- [Modo Claro Oscuro](#modo-claro-oscuro)
-- [Nueva Tarea]()
-- [Editar una Tarea](#)
-- [Marcar Tareas Realizadas](#)
-- [Borrar Tareas](#)
+- [1) Menú Filtros](#1-menú-filtros)
+- [2) Modo Claro Oscuro](#2-modo-claro-oscuro)
+- [3) Nueva Tarea](#3-nueva-tarea)
+- [4) Editar una Tarea](#4-editar-una-tarea)
+- [5) Marcar Tareas Realizadas](#5-marcar-tareas-como-realizadas)
+- [6) Borrar Tareas](#6-borrar-tareas)
 
-### _Menú Filtros_
+<p align="center" >
+   <img src="src/assets/img_readme/pant_ppal_flechas.png" width="400px" alt-text="Spinner">
+</p>
+
+### _1) Menú Filtros:_
 
 [:top:](#tareas) <br>
 
 Este menú es permite filtrar las tareas, por `Realizadas` o `No Realizadas`, o bien volver a mostra `Todas`. Al ingresar a la aplicación, por defecto siempre muetra todas las tareas.
 
-<p align="center" >
-   <img src="imgReadme/aspirantesTodos.png" width="400px" alt-text="Spinner">
-</p>
-
 <br>
 
 > [!NOTE]
-> Si la cantidad de tareas que existen, supera la cantidad de 5, en la pare inferior d ela tabla de visualización es posible seleccionar visualización de 10 tareas o de 20 tareas. <br>
-> Además, presenta la posibilidad de pasar de una página a la siguiente.
+> Si la cantidad de tareas que existen, supera la cantidad de 5, en la pare inferior de la tabla de tareas, es posible seleccionar entre visualizar 5, 10 o 20 tareas.
+> Además, presenta la posibilidad de pasar de una página a la siguiente. Por último, el selector de expandir o contraer la información de la tabla.
 
 <p align="center" >
-   <img src="imgReadme/Spinner.gif" width="300px" alt-text="Flecha">
+   <img src="src/assets/img_readme/pie_tabla.png" width="300px" alt-text="Flecha">
 </p>
 
 <br>
 
-### _Modo Claro Oscuro:_
+### _2) Modo Claro Oscuro:_
 
 [:top:](#tareas) <br>
 
@@ -118,38 +118,53 @@ Esta opción del menú principal, permite intercambiar entre el `Modo Claro` con
 
 <div align="center"  >
 
-|                                 Modo Claro                                  |                                 Modo Oscuro                                  |
-| :-------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-| <img src="imgReadme/btn inscribir.png" width="70px" alt-text="Sin sesión."> | <img src="imgReadme/btn inscribir2.png" width="70px" alt-text="Conr sesión"> |
+|                                      Modo Claro                                       |                                      Modo Oscuro                                       |
+| :-----------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| <img src="src/assets/img_readme/modo_claro.png" width="200px" alt-text="Sin sesión."> | <img src="src/assets/img_readme/modo_oscuro.png" width="200px" alt-text="Conr sesión"> |
 
 </div>
 
 <br>
 
-### _Nueva Tarea:_
+### _3) Nueva Tarea:_
 
 [:top:](#tareas) <br>
 
+<p align="center" >
+   <img src="src/assets/img_readme/tarea_nueva.png" width="300px" alt-text="Flecha">
+</p>
+
 ---
 
-### _Editar una Tarea:_
+### _4) Editar una Tarea:_
 
 [:top:](#tareas) <br>
 
+<p align="center" >
+   <img src="src/assets/img_readme/tarea_editar.png" width="300px" alt-text="Flecha">
+</p>
+
 ---
 
-### _MArcar Tareas como Realizadas:_
+### _5) Marcar Tareas como Realizadas:_
 
 [:top:](#tareas) <br>
 
+<p align="center" >
+   <img src="src/assets/img_readme/tarea_marcar.png" width="300px" alt-text="Flecha">
+</p>
+
 ---
 
-### _Borrar Tareas:_
+### _6) Borrar Tareas:_
 
 [:top:](#tareas) <br>
 
----
+<p align="center" >
+   <img src="src/assets/img_readme/tarea_borrar.png" width="300px" alt-text="Flecha">
+</p>
 
+---
 
 ## _Mobile_
 
