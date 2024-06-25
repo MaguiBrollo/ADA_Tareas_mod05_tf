@@ -26,6 +26,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { categorias } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 //------------------------------------
 const sinAcentosMayus = (texto) => {
@@ -58,8 +59,8 @@ export const TareaEditar = ({
 	selected,
 	setSelected,
 	setTareasEnOrden,
-	auxTareas,
-
+	tareasEnOrden,
+	//auxTareas,
 	setTipoFiltro,
 }) => {
 	const [errorTarea, setErrorTarea] = useState(false);
@@ -73,10 +74,10 @@ export const TareaEditar = ({
 		estado: false,
 	});
 
-	//Para que no se genere un infinito, encerré el if en unuseEffect.
+	//Para que no se genere un infinito, encerré el if en un useEffect.
 	useEffect(() => {
-		if (selected.length > 0 && auxTareas.length > 0) {
-			const tareaParaEditar = auxTareas.find((t) => t.id === selected[0]);
+		if (selected.length > 0 && tareasEnOrden.length > 0) {
+			const tareaParaEditar = tareasEnOrden.find((t) => t.id === selected[0]);
 			if (tareaParaEditar) {
 				setDatosForm({
 					id: tareaParaEditar.id,
@@ -87,7 +88,7 @@ export const TareaEditar = ({
 				});
 			}
 		}
-	}, [selected, auxTareas]);
+	}, [selected]);
 
 	let { id, tarea, categoria, fecha, estado } = datosForm;
 
@@ -110,17 +111,6 @@ export const TareaEditar = ({
 		} else {
 			setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
 		}
-
-		/* if (e.target.name === "tarea") {
-			if (tarea.length < 5 || tarea.length > 60) {
-				setErrorTarea(true);
-			} else {
-				setErrorTarea(false);
-			}
-		}
-		if (e.target.name === "categoria") {
-			categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
-		} */
 	};
 
 	const handleSubmitEdit = (tarea, categoria, fecha) => {
@@ -135,8 +125,8 @@ export const TareaEditar = ({
 				setErrorCategoria(false);
 
 				//------ guardar EDITAR ------------------
-				//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-				const nuevoTareasEnOrden = auxTareas.map((t) => {
+				const aux = [...getTareas()]; //Para tener el Array completo del LS
+				const nuevoTareasEnOrden = aux.map((t) => {
 					if (t.id === selected[0]) {
 						return {
 							id: id,

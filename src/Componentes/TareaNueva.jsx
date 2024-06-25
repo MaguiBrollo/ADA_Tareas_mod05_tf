@@ -28,6 +28,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { categorias } from "../utils/Datos";
 import { crearTarea } from "../utils/Datos";
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 //------------------------------------
 const sinAcentosMayus = (texto) => {
@@ -59,7 +60,6 @@ export const TareaNueva = ({
 	openTareaNueva,
 	setOpenTareaNueva,
 	setTareasEnOrden,
-	auxTareas,
 	setTipoFiltro,
 }) => {
 	const [errorTarea, setErrorTarea] = useState(false);
@@ -94,17 +94,6 @@ export const TareaNueva = ({
 		} else {
 			setDatosForm({ ...datosForm, [e.target.name]: e.target.value });
 		}
-
-		/* if (e.target.name === "tarea") {
-			if (tarea.length < 5 || tarea.length > 65) {
-				setErrorTarea(true);
-			} else {
-				setErrorTarea(false);
-			}
-		}
-		if (e.target.name === "categoria") {
-			categoria === "S" ? setErrorCategoria(true) : setErrorCategoria(false);
-		} */
 	};
 
 	//---- Para guardar en el LS y actualizar el array de la tabla
@@ -120,8 +109,7 @@ export const TareaNueva = ({
 					setErrorCategoria(false);
 
 					//------ guardar ------------------
-					//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-					const nuevoArrayTareas = [...auxTareas];
+					const nuevoArrayTareas = [...getTareas()]; //Para tener el Array completo del LS
 					const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
 					const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
 
