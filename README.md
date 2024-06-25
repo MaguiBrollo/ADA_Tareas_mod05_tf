@@ -3,7 +3,7 @@
      =========================================================== -->
 
 <p align="center">
-   <img src="imgReadme/portadaReadme.png" width="900px" alt-text="Teacher JOB">
+   <img src="src/assets/img_readme/logo.png" width="900px" alt-text="Teacher JOB">
 </p>
 
 ---
