@@ -10,9 +10,9 @@
 
 <div align="center">
 
-<a target="_blank" href="https://maguibrollo.github.io/ADA_TeacherJob_mod04_tf/"><img alt="Teacher JOB" src="https://img.shields.io/badge/Teacher%20JOB-Link-%23fa0130%20?labelColor=black&link=https%3A%2F%2Fmaguibrollo.github.io%2FADA_TeacherJob_mod04_tf%2F"></a>
+<a target="_blank" href="https://tasksinorder.netlify.app/"><img alt="tasks IN order" src="https://img.shields.io/badge/LINK%20-%20%234527A0?style=flat&label=tasks%20In%20order&labelColor=%23000000&color=%234527A0"></a>
 
-![GitHub Tag](https://img.shields.io/github/v/tag/MaguiBrollo/ADA_TeacherJob_mod04_tf?sort=semver&labelColor=black&color=fa0130 "Versión")
+![GitHub Tag](https://img.shields.io/github/v/tag/MaguiBrollo/ADA_Tareas_mod05_tf?logoColor=%23000000&labelColor=%23000000&color=%234527A0)
 
 </div>
 
@@ -64,11 +64,11 @@ Teacher JOB es una app desarrollada como Trabajo Final del "Módulo 5 - React", 
 ## _Tecnologías_
 
 [:top:](#tabla-de-contenidos) <br>
-`Tasks IN order` fue desarrollada utilizando las siguientes tecnologías:
+`tasks IN order` fue desarrollada utilizando las siguientes tecnologías:
 
 <div align="center">
 
-|                       [![HTML5](https://img.shields.io/static/v1?label=&message=HTML5&color=%23F8F9FA&logo=html5&logoColor=%23E54C21)](https://) REACT                        |                                                  [![Sass](https://img.shields.io/static/v1?label=&message=Sass&color=%23F8F9FA&logo=Sass&logoColor=%23CF649A)](https://) MAterial UI                                                  |
+|                          [![React](https://img.shields.io/static/v1?label=&message=React&color=%23EDE7F6&logo=react&logoColor=%230C9FCB)](https://)                           |                                                 [![Material UI](https://img.shields.io/static/v1?label=&message=Material+UI&color=%23EDE7F6&logo=mui&logoColor=%230082CC)](https://)                                                  |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | React es una biblioteca Javascript de código abierto diseñada para crear interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones en una sola página. | Material UI es una librería de componentes de React. js, de código abierto creada por Google, basada en Material Design, la cual brinda pautas y lineamientos que sientan la base para crear diseños profesionales para aplicaciones. |
 
@@ -97,6 +97,10 @@ La pantalla principal de la aplicación presenta las siguientes opciones:
 [:top:](#tareas) <br>
 
 Este menú es permite filtrar las tareas, por `Realizadas` o `No Realizadas`, o bien volver a mostra `Todas`. Al ingresar a la aplicación, por defecto siempre muetra todas las tareas.
+
+<p align="center" >
+   <img src="src/assets/img_readme/menu_filtros.png" width="300px" alt-text="Flecha">
+</p>
 
 <br>
 
@@ -173,18 +177,18 @@ Todas las opciones antes descriptas, se encuentran disposnibles para los diferen
 
 <div align="center">
 
-|                      Inicio                      |                      Menús                       |
-| :----------------------------------------------: | :----------------------------------------------: |
-| <img src="imgReadme/mobile01.png" width="150px"> | <img src="imgReadme/mobile02.png" width="150px"> |
+|                           Modo Claro                           |                           Modo Oscuro                           |
+| :------------------------------------------------------------: | :-------------------------------------------------------------: |
+| <img src="src/assets/img_readme/celu_claro.png" width="150px"> | <img src="src/assets/img_readme/celu_oscuro.png" width="150px"> |
 
 </div>
 <br>
 
 <div align="center">
 
-|                         Filtros                         |                     Ver más                      |                      Sesión                      |
-| :-----------------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: |
-| <img src="imgReadme/mobile06Filtros.png" width="150px"> | <img src="imgReadme/mobile04.png" width="150px"> | <img src="imgReadme/mobile03.png" width="150px"> |
+|                           Nueva Tarea                           |                        Marcar Ralizadas                         |
+| :-------------------------------------------------------------: | :-------------------------------------------------------------: |
+| <img src="src/assets/img_readme/celu_nuevaT.png" width="150px"> | <img src="src/assets/img_readme/celu_marcar.png" width="150px"> |
 
 </div>
 
