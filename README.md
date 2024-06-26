@@ -40,7 +40,7 @@
 
 [:top:](#tabla-de-contenidos) <br>
 
-> Las aplicaciones web, comúnmente conocidas como apps, se han convertido en una parte esencial de nuestra vida cotidiana. Las apps se han consolidado como nuestras aliadas, simplificándonos tareas diarias complejas, como otras no tan complejas como por ejemplo el registro de tareas pendientes de realización. <br> `tasks IN order` se consolida como una herramienta sencilla y sumamente útil, ideal para registrar de manera fácil, tareas con su respectiva fecha de posible realización.
+> Las aplicaciones web, comúnmente conocidas como apps, se han convertido en una parte esencial de nuestra vida cotidiana. Las apps se han consolidado como nuestras aliadas, simplificándonos tareas diarias complejas, como otras no tan complejas, como por ejemplo el registro de tareas pendientes de realización. <br> `tasks IN order` se consolida como una herramienta sencilla y súmamente útil, ideal para registrar de manera fácil, tareas con su respectiva fecha de posible realización.
 
 <p align="center" >
    <img src="src/assets/img_readme/pant_ppal.png" width="400px" alt-text="Presentación">
@@ -85,10 +85,10 @@ La pantalla principal de la aplicación presenta las siguientes opciones:
 
 - [1) Menú Filtros](#1-menú-filtros)
 - [2) Modo Claro Oscuro](#2-modo-claro-oscuro)
-- [3) Nueva Tarea](#3-nueva-tarea)
+- [3) Agregar una Tarea](#3-agregar-una-tarea)
 - [4) Editar una Tarea](#4-editar-una-tarea)
-- [5) Marcar Tareas Realizadas](#5-marcar-tareas-como-realizadas)
-- [6) Borrar Tareas](#6-borrar-tareas)
+- [5) Marcar como Tarea Realizada](#5-marcar-como-tarea-realizada)
+- [6) Eliminar Tareas](#6-eliminar-tareas)
 
 <p align="center" >
    <img src="src/assets/img_readme/pant_ppal_flechas.png" width="400px" alt-text="Ventana principal">
