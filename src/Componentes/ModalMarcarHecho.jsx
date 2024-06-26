@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -21,8 +22,6 @@ export const ModalMarcarHecho = ({
 	selected,
 	setSelected,
 	setTareasEnOrden,
-	auxTareas,
-
 	setTipoFiltro,
 }) => {
 	const handleClose = () => {
@@ -30,8 +29,8 @@ export const ModalMarcarHecho = ({
 	};
 
 	const handleCloseMarcar = () => {
-		//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-		const nuevoTareasEnOrden = auxTareas.map((t) => {
+		const aux = [...getTareas()]; //Para tener el Array completo del LS
+		const nuevoTareasEnOrden = aux.map((t) => {
 			if (selected.some((s) => s === t.id)) {
 				return {
 					id: t.id,

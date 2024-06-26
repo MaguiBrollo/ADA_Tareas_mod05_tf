@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
 import { setTareas } from "../utils/LocalStorage";
+import { getTareas } from "../utils/LocalStorage";
 
 const TransitionBorrar = forwardRef(function Transition(props, ref2) {
 	return <Slide direction="up" ref={ref2} {...props} />;
@@ -21,15 +22,14 @@ export const TareaBorrar = ({
 	selected,
 	setSelected,
 	setTareasEnOrden,
-	auxTareas,
 	setTipoFiltro,
 }) => {
 	const handleCloseB = () => {
 		setOpenModalBorrar(false);
 	};
 	const handleCloseBorrar = () => {
-		//auxTareas: array que tiene lo último del LS, se lo setea antes de abrir esta modal
-		const nuevoArrayTareas = auxTareas.filter((t) => !selected.includes(t.id));
+		const aux = [...getTareas()]; //Para tener el Array completo del LS
+		const nuevoArrayTareas = aux.filter((t) => !selected.includes(t.id));
 
 		setTareas(nuevoArrayTareas); //LocalStorage
 		setTareasEnOrden(nuevoArrayTareas); //Listar

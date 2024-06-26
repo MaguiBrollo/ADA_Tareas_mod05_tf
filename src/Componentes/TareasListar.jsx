@@ -27,8 +27,6 @@ import { RiTaskLine } from "react-icons/ri";
 import { BiSolidEdit } from "react-icons/bi";
 import { MdOutlineAddBox } from "react-icons/md";
 
-import { getTareas } from "../utils/LocalStorage";
-
 import dayjs from "dayjs";
 
 //----------------------------------------------------
@@ -67,8 +65,9 @@ function stableSort(array, comparator) {
 
 //----------------------------------------------------
 const headCells = [
-	{ //los "id", tienen que ser igual a cada campo de Array de Tarea
-		id: "tarea", 
+	{
+		//los "id", tienen que ser igual a cada campo de Array de Tarea
+		id: "tarea",
 		numeric: false,
 		disablePadding: true,
 		label: "TAREA",
@@ -162,7 +161,6 @@ function EnhancedTableToolbar({
 	selected,
 	numSelected,
 	tareasEnOrden,
-	setAuxTareas,
 	setOpenTareaNueva,
 	setOpenModalHecho,
 	setOpenModalBorrar,
@@ -170,7 +168,6 @@ function EnhancedTableToolbar({
 	setOpenNoEditar,
 }) {
 	const nuevaTarea = () => {
-		setAuxTareas(getTareas());
 		setOpenTareaNueva(true);
 	};
 
@@ -179,18 +176,15 @@ function EnhancedTableToolbar({
 		if (tareaParaEditar.estado) {
 			setOpenNoEditar(true); //No se edita si está Marcada Realizada
 		} else {
-			setAuxTareas(getTareas());
 			setOpenTareaEditar(true);
 		}
 	};
 
 	const marcarComoHecho = () => {
-		setAuxTareas(getTareas());
 		setOpenModalHecho(true);
 	};
 
 	const marcarBorrar = () => {
-		setAuxTareas(getTareas());
 		setOpenModalBorrar(true);
 	};
 

@@ -30,7 +30,6 @@ function App() {
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
-	const [auxTareas, setAuxTareas] = React.useState([]);
 	const [selected, setSelected] = React.useState([]); //array se seleccionados
 
 	const [openTareaNueva, setOpenTareaNueva] = React.useState(false);
@@ -181,8 +180,6 @@ function App() {
 							setSelected={setSelected}
 							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							auxTareas={auxTareas}
-							setAuxTareas={setAuxTareas}
 							setOpenTareaNueva={setOpenTareaNueva}
 							setOpenModalHecho={setOpenModalHecho}
 							setOpenModalBorrar={setOpenModalBorrar}
@@ -194,7 +191,6 @@ function App() {
 							openTareaNueva={openTareaNueva}
 							setOpenTareaNueva={setOpenTareaNueva}
 							setTareasEnOrden={setTareasEnOrden}
-							auxTareas={auxTareas}
 							setTipoFiltro={setTipoFiltro}
 						/>
 						{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
@@ -203,8 +199,8 @@ function App() {
 							setOpenModalBorrar={setOpenModalBorrar}
 							selected={selected}
 							setSelected={setSelected}
+							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							auxTareas={auxTareas}
 							setTipoFiltro={setTipoFiltro}
 						/>
 						{/* ------- Editar Tarea  -------*/}
@@ -214,8 +210,8 @@ function App() {
 								setOpenTareaEditar={setOpenTareaEditar}
 								selected={selected}
 								setSelected={setSelected}
+								tareasEnOrden={tareasEnOrden}
 								setTareasEnOrden={setTareasEnOrden}
-								auxTareas={auxTareas}
 								setTipoFiltro={setTipoFiltro}
 							/>
 						)}
@@ -225,8 +221,8 @@ function App() {
 							setOpenModalHecho={setOpenModalHecho}
 							selected={selected}
 							setSelected={setSelected}
+							tareasEnOrden={tareasEnOrden}
 							setTareasEnOrden={setTareasEnOrden}
-							auxTareas={auxTareas}
 							setTipoFiltro={setTipoFiltro}
 						/>
 
