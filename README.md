@@ -109,7 +109,7 @@ Este menú permite filtrar las tareas por `Realizadas` o `No Realizadas`, tambi�
 
 > [!NOTE]
 > Si la cantidad de tareas que existen, supera la cantidad de 5, en la parte inferior de la tabla de tareas, es posible seleccionar entre visualizar 5, 10 ó 20 tareas.
-> Además, presenta la posibilidad de pasar de una página a la siguiente. Por último,a la izquierda de la ventana principal,  el selector de expandir o contraer la información de la tabla.
+> Además, presenta la posibilidad de pasar de una página a la siguiente. Por último, a la izquierda de la ventana principal,  el selector de expandir o contraer la información de la tabla.
 
 <p align="center" >
    <img src="src/assets/img_readme/pie_tabla.png" width="300px" alt-text="Pie de tabla">
@@ -122,7 +122,7 @@ Este menú permite filtrar las tareas por `Realizadas` o `No Realizadas`, tambi�
 
 [:top:](#tareas) <br>
 
-Esta opción del menú principal, permite intercambiar entre el `Modo Claro` con tonalidades de color púrpura, y el `Modo Oscuro` que presenta la aplicación en tonos de grises.
+El icono de "Cambiar modo Claro/Oscuro" <img src="src/assets/img_readme/icono mCo.png" width=100px" alt-text="Modo Claro/Oscuro"> , permite intercambiar entre el `Modo Claro` con tonalidades de color púrpura, y el `Modo Oscuro` que presenta la aplicación en tonos de grises.
 
 <div align="center"  >
 
@@ -140,7 +140,7 @@ Esta opción del menú principal, permite intercambiar entre el `Modo Claro` con
 
 [:top:](#tareas) <br>
 
-El icono de "Agregar una Tarea"  <img src="src/assets/img_readme/icono nt.png" width="70px" alt-text="Icono">, se encuentra siempre activado, permitiendo agregar tareas en todo momento, aunque se aplique un filtro o se seleccionen tareas. <br>
+El icono de "Agregar una Tarea"  <img src="src/assets/img_readme/icono nt.png" width="100px" alt-text="Icono">, se encuentra siempre activado, permitiendo agregar tareas en todo momento, aunque se aplique un filtro o se seleccionen tareas. <br>
 Los datos obligatorios son:
 - Descripción: un breve texto entre 5 a 65 caracteres que describa la tarea. Independientemente de cómo se escriba, siempre se visualizará en mayúsculas y sin acentos. 
 - Categoría: seleccionar de la lista la categoría adecuada, en caso de no existir, seleccionar "Varios".
@@ -156,7 +156,7 @@ Los datos obligatorios son:
 
 [:top:](#tareas) <br>
 
-El icono de "Editar una tarea" <img src="src/assets/img_readme/icono et.png" width="70px" > se activará únicamente cuando se seleccione UNA sola tarea. 
+El icono de "Editar una tarea" <img src="src/assets/img_readme/icono et.png" width="100px" > se activará únicamente cuando se seleccione UNA sola tarea. 
 Los datos a completar son los mismos que en la opción de agregar una tarea.
 
 <p align="center" >
@@ -169,7 +169,7 @@ Los datos a completar son los mismos que en la opción de agregar una tarea.
 
 [:top:](#tareas) <br>
 
-El icono de "Marcar como Tarea Realizada" <img src="src/assets/img_readme/icono tr.png" width="70px" >, se activa después de seleccionar por lo menos una tarea. Puede utilizarse este icono para MARCAR una tarea (o varias) como Realizada/No relaizada. En la columna "Estado" se visualizará un icono diferente dependiendo si la tarea esta marcada como Realizada <img src="src/assets/img_readme/icono r.png" width="25px" > , no Realizada <img src="src/assets/img_readme/icono nr.png" width="25px" >.
+El icono de "Marcar como Tarea Realizada" <img src="src/assets/img_readme/icono tr.png" width="100px" >, se activa después de seleccionar por lo menos una tarea. Puede utilizarse este icono para MARCAR una tarea (o varias) como Realizada/No realizada. En la columna "Estado" se visualizará un icono diferente dependiendo si la tarea está marcada como Realizada <img src="src/assets/img_readme/icono r.png" width="25px" > , no Realizada <img src="src/assets/img_readme/icono Nr.png" width="25px" >.
 
 <p align="center" >
    <img src="src/assets/img_readme/tarea_marcar.png" width="300px" alt-text="Flecha">
