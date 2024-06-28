@@ -31,9 +31,6 @@ function App() {
 		getTareas() || setTareas(tareasArray)
 	);
 
-	console.log("paso por app")
-	console.log(tareasEnOrden)
-
 	const [selected, setSelected] = React.useState([]); //array de seleccionados
 
 	const [openTareaNueva, setOpenTareaNueva] = React.useState(false);

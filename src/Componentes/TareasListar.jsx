@@ -301,9 +301,6 @@ export const TareasListar = ({
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	
-	console.log("paso por Listar");
-	console.log(tareasEnOrden);
-
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
