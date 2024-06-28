@@ -11,4 +11,5 @@ export const getTareas = () => {
 
 export const setTareas = (tareas) => {
 	localStorage.setItem("tareas", JSON.stringify(tareas));
+	return JSON.parse(localStorage.getItem("tareas"));
 };

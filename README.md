@@ -181,7 +181,7 @@ El icono de "Marcar como Tarea Realizada" <img src="src/assets/img_readme/icono 
 
 [:top:](#tareas) <br>
 
-El icono de "Eliminar tarea/s seleccionada/s" <img src="src/assets/img_readme/icono br.png" width="70px" >, se activa después de seleccionar por lo menos una tarea. Puede utilizarse este icono para BORRAR una tarea o varias tareas juntas. 
+El icono de "Eliminar tarea/s seleccionada/s" <img src="src/assets/img_readme/icono br.png" width="100px" >, se activa después de seleccionar por lo menos una tarea. Puede utilizarse este icono para BORRAR una tarea o varias tareas juntas. 
 
 <p align="center" >
    <img src="src/assets/img_readme/tarea_borrar.png" width="300px" alt-text="Flecha">
