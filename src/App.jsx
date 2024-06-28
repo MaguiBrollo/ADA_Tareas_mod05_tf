@@ -30,7 +30,8 @@ function App() {
 	const [tareasEnOrden, setTareasEnOrden] = React.useState(
 		getTareas() || setTareas(tareasArray)
 	);
-	const [selected, setSelected] = React.useState([]); //array se seleccionados
+
+	const [selected, setSelected] = React.useState([]); //array de seleccionados
 
 	const [openTareaNueva, setOpenTareaNueva] = React.useState(false);
 	const [openModalHecho, setOpenModalHecho] = React.useState(false);
