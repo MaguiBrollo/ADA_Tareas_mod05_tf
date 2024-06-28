@@ -150,8 +150,9 @@ export const TareaEditar = ({
 
 				setLoading(true);
 				setTimeout(() => {
-					setTareasEnOrden(nuevoTareasEnOrden); //Listar
-					setTareas(nuevoTareasEnOrden); //LocalStorage
+					//Guarda en LocalStorage y en set para listar
+					setTareasEnOrden(setTareas(nuevoTareasEnOrden));
+
 					setLoading(false);
 					cerrarTareaEditar();
 					setTipoFiltro("TODAS"); //solo para mostrar el texto

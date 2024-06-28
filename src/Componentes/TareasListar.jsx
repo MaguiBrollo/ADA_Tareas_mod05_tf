@@ -300,6 +300,9 @@ export const TareasListar = ({
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
+	
+	console.log("paso por Listar");
+	console.log(tareasEnOrden);
 
 	//-------------------------------------------------
 	const handleRequestSort = (event, property) => {

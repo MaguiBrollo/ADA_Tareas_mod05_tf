@@ -50,8 +50,9 @@ export const ModalMarcarHecho = ({
 			}
 		});
 
-		setTareasEnOrden(nuevoTareasEnOrden); //Listar
-		setTareas(nuevoTareasEnOrden); //LocalStorage
+		//Guarda en LocalStorage y en set para listar
+		setTareasEnOrden(setTareas(nuevoTareasEnOrden)); //Listar
+
 		setTipoFiltro("TODAS");
 		setOpenModalHecho(false);
 		setSelected([]);

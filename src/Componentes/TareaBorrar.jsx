@@ -31,8 +31,8 @@ export const TareaBorrar = ({
 		const aux = [...getTareas()]; //Para tener el Array completo del LS
 		const nuevoArrayTareas = aux.filter((t) => !selected.includes(t.id));
 
-		setTareas(nuevoArrayTareas); //LocalStorage
-		setTareasEnOrden(nuevoArrayTareas); //Listar
+		//Guarda en LocalStorage y en set para listar
+		setTareasEnOrden(setTareas(nuevoArrayTareas)); 
 		setOpenModalBorrar(false);
 		setSelected([]);
 

@@ -117,8 +117,8 @@ export const TareaNueva = ({
 
 					setLoading(true);
 					setTimeout(() => {
-						setTareasEnOrden(nuevoArrayTareas); //array para listar
-						setTareas(nuevoArrayTareas); //localstorage
+						//Guarda en LocalStorage y en set para listar
+						setTareasEnOrden(setTareas(nuevoArrayTareas));
 
 						setLoading(false);
 						cerrarTareaNueva();
