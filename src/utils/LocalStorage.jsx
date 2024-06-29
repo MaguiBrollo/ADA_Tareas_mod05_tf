@@ -1,6 +1,6 @@
 export const getTareas = () => {
 	if (localStorage.getItem("tareas") !== null) {
-		if (JSON.parse(localStorage.getItem("tareas")).length > 0) {
+		if (JSON.parse(localStorage.getItem("tareas")).length >= 0) {
 			return JSON.parse(localStorage.getItem("tareas"));
 		}else{
          return false;
