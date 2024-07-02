@@ -163,6 +163,7 @@ function App() {
 							setTipoFiltro={setTipoFiltro}
 							setTareasEnOrden={setTareasEnOrden}
 						/>
+
 						{/*  ----  Título  -------*/}
 						<Typography
 							sx={{
@@ -175,6 +176,7 @@ function App() {
 						>
 							Tareas: {tipoFiltro.toUpperCase()}
 						</Typography>
+
 						{/*  ----  TAREAS LISTAR TODAS  -------*/}
 						<TareasListar
 							selected={selected}
@@ -187,25 +189,32 @@ function App() {
 							setOpenTareaEditar={setOpenTareaEditar}
 							setOpenNoEditar={setOpenNoEditar}
 						/>
+
 						{/* ------- Modal de Tarea Nueva ------- */}
-						<TareaNueva
-							openTareaNueva={openTareaNueva}
-							setOpenTareaNueva={setOpenTareaNueva}
-							setTareasEnOrden={setTareasEnOrden}
-							setTipoFiltro={setTipoFiltro}
-						/>
+						{openTareaNueva && (
+							<TareaNueva
+								openTareaNueva={openTareaNueva}
+								setOpenTareaNueva={setOpenTareaNueva}
+								setTareasEnOrden={setTareasEnOrden}
+								setTipoFiltro={setTipoFiltro}
+							/>
+						)}
+
 						{/* ------- Modal de Acepta BORRAR Tarea/s ------- */}
-						<TareaBorrar
-							openModalBorrar={openModalBorrar}
-							setOpenModalBorrar={setOpenModalBorrar}
-							selected={selected}
-							setSelected={setSelected}
-							tareasEnOrden={tareasEnOrden}
-							setTareasEnOrden={setTareasEnOrden}
-							setTipoFiltro={setTipoFiltro}
-						/>
+						{openModalBorrar && (
+							<TareaBorrar
+								openModalBorrar={openModalBorrar}
+								setOpenModalBorrar={setOpenModalBorrar}
+								selected={selected}
+								setSelected={setSelected}
+								tareasEnOrden={tareasEnOrden}
+								setTareasEnOrden={setTareasEnOrden}
+								setTipoFiltro={setTipoFiltro}
+							/>
+						)}
+
 						{/* ------- Editar Tarea  -------*/}
-						{selected.length > 0 && (
+						{openTareaEditar && (
 							<TareaEditar
 								openTareaEditar={openTareaEditar}
 								setOpenTareaEditar={setOpenTareaEditar}
@@ -216,22 +225,27 @@ function App() {
 								setTipoFiltro={setTipoFiltro}
 							/>
 						)}
+
 						{/* ------- Modal de Acepta marcar como Tarea Realizada ------- */}
-						<ModalMarcarHecho
-							openModalHecho={openModalHecho}
-							setOpenModalHecho={setOpenModalHecho}
-							selected={selected}
-							setSelected={setSelected}
-							tareasEnOrden={tareasEnOrden}
-							setTareasEnOrden={setTareasEnOrden}
-							setTipoFiltro={setTipoFiltro}
-						/>
+						{openModalHecho && (
+							<ModalMarcarHecho
+								openModalHecho={openModalHecho}
+								setOpenModalHecho={setOpenModalHecho}
+								selected={selected}
+								setSelected={setSelected}
+								tareasEnOrden={tareasEnOrden}
+								setTareasEnOrden={setTareasEnOrden}
+								setTipoFiltro={setTipoFiltro}
+							/>
+						)}
 
 						{/*  -------  Modal No se puede Editar Tarea  -------*/}
-						<ModalNoEditar
-							openNoEditar={openNoEditar}
-							setOpenNoEditar={setOpenNoEditar}
-						/>
+						{openNoEditar && (
+							<ModalNoEditar
+								openNoEditar={openNoEditar}
+								setOpenNoEditar={setOpenNoEditar}
+							/>
+						)}
 					</Box>
 				</LocalizationProvider>
 			</ThemeProvider>

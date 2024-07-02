@@ -75,7 +75,7 @@ export const TareaNueva = ({
 	const { tarea, categoria, fecha } = datosForm;
 
 	useEffect(() => {
-		if (tarea !== "") {
+		if (tarea.trim() !== "") {
 			if (tarea.length < 5 || tarea.length > 65) {
 				setErrorTarea(true);
 			} else {
@@ -98,7 +98,7 @@ export const TareaNueva = ({
 
 	//---- Para guardar en el LS y actualizar el array de la tabla
 	const handleSubmit = (tarea, categoria, fecha) => {
-		if (tarea !== "") {
+		if (tarea.trim() !== "") {
 			if (tarea.length < 5 || tarea.length > 65) {
 				setErrorTarea(true);
 			} else {
@@ -111,7 +111,7 @@ export const TareaNueva = ({
 					//------ guardar ------------------
 					const nuevoArrayTareas = [...getTareas()]; //Para tener el Array completo del LS
 					const nuevaFecha = dayjs(fecha).format("YYYY/MM/DD");
-					const nuevaTarea = crearTarea(tarea, categoria, nuevaFecha, false);
+					const nuevaTarea = crearTarea(tarea.trim(), categoria, nuevaFecha, false);
 
 					nuevoArrayTareas.push(nuevaTarea);
 

@@ -93,7 +93,7 @@ export const TareaEditar = ({
 	let { id, tarea, categoria, fecha, estado } = datosForm;
 
 	useEffect(() => {
-		if (tarea.length < 5 || tarea.length > 65) {
+		if (tarea.trim().length < 5 || tarea.trim().length > 65) {
 			setErrorTarea(true);
 		} else {
 			setErrorTarea(false);
@@ -114,7 +114,7 @@ export const TareaEditar = ({
 	};
 
 	const handleSubmitEdit = (tarea, categoria, fecha) => {
-		if (tarea.length < 5 || tarea.length > 60) {
+		if (tarea.trim().length < 5 || tarea.trim().length > 60) {
 			setErrorTarea(true);
 		} else {
 			setErrorTarea(false);
@@ -126,23 +126,17 @@ export const TareaEditar = ({
 
 				//------ guardar EDITAR ------------------
 				const aux = [...getTareas()]; //Para tener el Array completo del LS
-				const nuevoTareasEnOrden = aux.map((t) => {
-					if (t.id === selected[0]) {
+				const nuevoTareasEnOrden = aux.map((t_tarea) => {
+					if (t_tarea.id === selected[0]) {
 						return {
 							id: id,
-							tarea: tarea,
+							tarea: tarea.trim(),
 							categoria: categoria,
 							fecha: dayjs(fecha).format("YYYY/MM/DD"),
 							estado: estado,
 						};
 					} else {
-						return {
-							id: t.id,
-							tarea: t.tarea,
-							categoria: t.categoria,
-							fecha: t.fecha,
-							estado: t.estado,
-						};
+						return t_tarea
 					}
 				});
 

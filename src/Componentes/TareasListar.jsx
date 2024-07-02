@@ -124,7 +124,7 @@ function EnhancedTableHead(props) {
 				{headCells.map((headCell) => (
 					<TableCell
 						key={headCell.id}
-						align={headCell.numeric ? "right" : "center"}
+						align={headCell.numeric ? "left" : "center"}
 						padding={headCell.disablePadding ? "none" : "normal"}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -421,7 +421,7 @@ export const TareasListar = ({
 											/>
 										</TableCell>
 
-										<TableCell align="center">{row.tarea}</TableCell>
+										<TableCell align="left">{row.tarea}</TableCell>
 										<TableCell align="center">{row.categoria}</TableCell>
 										<TableCell align="center">
 											{dayjs(row.fecha).format("DD/MM/YYYY")}
